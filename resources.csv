@@ -6,6 +6,7 @@ Coal - Australia,fossil-fuels,coal-australia,Coal,Australia,AUS,Mt/yr,442.93,869
 Coal - Indonesia,fossil-fuels,coal-indonesia,Coal,Indonesia,IDN,Mt/yr,781.26,8698.63,39947,,51.1,2075,172.78,$/t,134.99,9.0,2.32,tCO₂/t,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Coal - Russia,fossil-fuels,coal-russia,Coal,Russia,RUS,Mt/yr,479.92,8698.63,162166,,337.9,2361,172.78,$/t,82.92,5.5,2.32,tCO₂/t,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Coal - South Africa,fossil-fuels,coal-south-africa,Coal,South Africa,ZAF,Mt/yr,237.96,8698.63,9893,,41.6,2065,172.78,$/t,41.12,2.7,2.32,tCO₂/t,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
+Coal - Vietnam,fossil-fuels,coal-vietnam,Coal,Vietnam,VNM,Mt/yr,47.37,8698.63,,,,,172.78,$/t,8.19,0.5,2.32,tCO₂/t,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Crude Oil - USA,fossil-fuels,crude-oil-usa,Crude Oil,United States,USA,Mb/d,12.943,82.093,68.8,,14.6,2038,80.76,$/bbl,381.54,15.8,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Crude Oil - Saudi Arabia,fossil-fuels,crude-oil-saudi-arabia,Crude Oil,Saudi Arabia,SAU,Mb/d,9.748,82.093,267.2,,75.1,2099,80.76,$/bbl,287.36,11.9,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Crude Oil - Russia,fossil-fuels,crude-oil-russia,Crude Oil,Russia,RUS,Mb/d,10.277,82.093,80.0,,21.3,2045,80.76,$/bbl,302.93,12.5,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
@@ -15,6 +16,8 @@ Crude Oil - UAE,fossil-fuels,crude-oil-uae,Crude Oil,United Arab Emirates,ARE,Mb
 Crude Oil - Iran,fossil-fuels,crude-oil-iran,Crude Oil,Iran,IRN,Mb/d,3.525,82.093,208.6,,162.1,2186,80.76,$/bbl,103.9,4.3,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Crude Oil - Kuwait,fossil-fuels,crude-oil-kuwait,Crude Oil,Kuwait,KWT,Mb/d,2.71,82.093,101.5,,102.6,2126,80.76,$/bbl,79.88,3.3,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Crude Oil - Brazil,fossil-fuels,crude-oil-brazil,Crude Oil,Brazil,BRA,Mb/d,3.402,82.093,15.0,,12.1,2036,80.76,$/bbl,100.27,4.1,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
+Crude Oil - Venezuela,fossil-fuels,crude-oil-venezuela,Crude Oil,Venezuela,VEN,Mb/d,0.771,82.093,303.3,,1078.5,3102,80.76,$/bbl,22.71,0.9,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
+Crude Oil - Nigeria,fossil-fuels,crude-oil-nigeria,Crude Oil,Nigeria,NGA,Mb/d,1.442,82.093,36.9,,70.1,2094,80.76,$/bbl,42.5,1.8,0.43,tCO₂/bbl,2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Natural Gas - USA,fossil-fuels,natural-gas-usa,Natural Gas,United States,USA,BCM/yr,1070.4693,4155.4662,12.6,,11.8,2035,2.54,$/mmbtu,96.02,25.8,1.83,tCO₂/t (≈0.05 tCO₂/Mcf),2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Natural Gas - Russia,fossil-fuels,natural-gas-russia,Natural Gas,Russia,RUS,BCM/yr,597.5904,4155.4662,37.4,,62.6,2086,2.54,$/mmbtu,53.6,14.4,1.83,tCO₂/t (≈0.05 tCO₂/Mcf),2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Natural Gas - Iran,fossil-fuels,natural-gas-iran,Natural Gas,Iran,IRN,BCM/yr,274.0328,4155.4662,34.0,,124.1,2148,2.54,$/mmbtu,24.58,6.6,1.83,tCO₂/t (≈0.05 tCO₂/Mcf),2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
@@ -23,22 +26,25 @@ Natural Gas - China,fossil-fuels,natural-gas-china,Natural Gas,China,CHN,BCM/yr,
 Natural Gas - Australia,fossil-fuels,natural-gas-australia,Natural Gas,Australia,AUS,BCM/yr,151.3126,4155.4662,4.4,,29.1,2053,2.54,$/mmbtu,13.57,3.6,1.83,tCO₂/t (≈0.05 tCO₂/Mcf),2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Natural Gas - Canada,fossil-fuels,natural-gas-canada,Natural Gas,Canada,CAN,BCM/yr,194.1019,4155.4662,2.5,,12.9,2036,2.54,$/mmbtu,17.41,4.7,1.83,tCO₂/t (≈0.05 tCO₂/Mcf),2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
 Natural Gas - Norway,fossil-fuels,natural-gas-norway,Natural Gas,Norway,NOR,BCM/yr,123.0519,4155.4662,1.5,,12.2,2036,2.54,$/mmbtu,11.04,3.0,1.83,tCO₂/t (≈0.05 tCO₂/Mcf),2023,EIA International Energy Statistics 2024; BP Statistical Review 2024
-Uranium - Kazakhstan,nuclear,uranium-kazakhstan,Uranium,Kazakhstan,KAZ,t U/yr,21227,44411,932,4343,43.9,2067,65,lb U₃O₈,3.58,47.8,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
-Uranium - Canada,nuclear,uranium-canada,Uranium,Canada,CAN,t U/yr,7000,44411,588,4343,84.0,2108,65,lb U₃O₈,1.18,15.8,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
-Uranium - Namibia,nuclear,uranium-namibia,Uranium,Namibia,NAM,t U/yr,5613,44411,463,4343,82.5,2106,65,lb U₃O₈,0.95,12.6,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
-Uranium - Australia,nuclear,uranium-australia,Uranium,Australia,AUS,t U/yr,4087,44411,1720,4343,420.8,2444,65,lb U₃O₈,0.69,9.2,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
-Uranium - Uzbekistan,nuclear,uranium-uzbekistan,Uranium,Uzbekistan,UZB,t U/yr,3500,44411,130,4343,37.1,2061,65,lb U₃O₈,0.59,7.9,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
-Uranium - Russia,nuclear,uranium-russia,Uranium,Russia,RUS,t U/yr,2984,44411,510,4343,170.9,2194,65,lb U₃O₈,0.5,6.7,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Kazakhstan,nuclear,uranium-kazakhstan,Uranium,Kazakhstan,KAZ,t U/yr,21227,46431,932,4620,43.9,2067,65,lb U₃O₈,3.58,45.7,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Canada,nuclear,uranium-canada,Uranium,Canada,CAN,t U/yr,7000,46431,588,4620,84.0,2108,65,lb U₃O₈,1.18,15.1,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Namibia,nuclear,uranium-namibia,Uranium,Namibia,NAM,t U/yr,5613,46431,463,4620,82.5,2106,65,lb U₃O₈,0.95,12.1,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Australia,nuclear,uranium-australia,Uranium,Australia,AUS,t U/yr,4087,46431,1720,4620,420.8,2444,65,lb U₃O₈,0.69,8.8,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Uzbekistan,nuclear,uranium-uzbekistan,Uranium,Uzbekistan,UZB,t U/yr,3500,46431,130,4620,37.1,2061,65,lb U₃O₈,0.59,7.5,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Russia,nuclear,uranium-russia,Uranium,Russia,RUS,t U/yr,2984,46431,510,4620,170.9,2194,65,lb U₃O₈,0.5,6.4,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
+Uranium - Niger,nuclear,uranium-niger,Uranium,Niger,NER,t U/yr,2020,46431,277,4620,137.1,2161,65,lb U₃O₈,0.34,4.4,,,2023,World Nuclear Association 2024; IAEA Red Book 2023
 Lithium - Australia,minerals-critical,lithium-australia,Lithium,Australia,AUS,metric tons,91700.0,204000.0,7000000.0,30000000.0,76.3,2100,22000,t (LCE),2.02,45.0,,,2023,USGS Mineral Commodity Summaries 2025
 Lithium - Chile,minerals-critical,lithium-chile,Lithium,Chile,CHL,metric tons,41400.0,204000.0,9300000.0,30000000.0,224.6,2248,22000,t (LCE),0.91,20.3,,,2023,USGS Mineral Commodity Summaries 2025
 Lithium - China,minerals-critical,lithium-china,Lithium,China,CHN,metric tons,35700.0,204000.0,3000000.0,30000000.0,84.0,2108,22000,t (LCE),0.79,17.5,,,2023,USGS Mineral Commodity Summaries 2025
 Lithium - Argentina,minerals-critical,lithium-argentina,Lithium,Argentina,ARG,metric tons,8630.0,204000.0,4000000.0,30000000.0,463.5,2487,22000,t (LCE),0.19,4.2,,,2023,USGS Mineral Commodity Summaries 2025
 Lithium - Brazil,minerals-critical,lithium-brazil,Lithium,Brazil,BRA,metric tons,5260.0,204000.0,390000.0,30000000.0,74.1,2098,22000,t (LCE),0.12,2.6,,,2023,USGS Mineral Commodity Summaries 2025
+Lithium - Zimbabwe,minerals-critical,lithium-zimbabwe,Lithium,Zimbabwe,ZWE,metric tons,14900.0,204000.0,480000.0,30000000.0,32.2,2056,22000,t (LCE),0.33,7.3,,,2023,USGS Mineral Commodity Summaries 2025
 Cobalt - DRC,minerals-critical,cobalt-drc,Cobalt,Dem. Rep. Congo,COD,metric tons,175000.0,238000.0,6000000.0,11000000.0,34.3,2058,33000,t,5.78,73.5,,,2023,USGS Mineral Commodity Summaries 2025
 Cobalt - Russia,minerals-critical,cobalt-russia,Cobalt,Russia,RUS,metric tons,8700.0,238000.0,250000.0,11000000.0,28.7,2052,33000,t,0.29,3.7,,,2023,USGS Mineral Commodity Summaries 2025
 Cobalt - Australia,minerals-critical,cobalt-australia,Cobalt,Australia,AUS,metric tons,5220.0,238000.0,1700000.0,11000000.0,325.7,2349,33000,t,0.17,2.2,,,2023,USGS Mineral Commodity Summaries 2025
 Cobalt - Philippines,minerals-critical,cobalt-philippines,Cobalt,Philippines,PHL,metric tons,3800.0,238000.0,260000.0,11000000.0,68.4,2092,33000,t,0.13,1.6,,,2023,USGS Mineral Commodity Summaries 2025
 Cobalt - Canada,minerals-critical,cobalt-canada,Cobalt,Canada,CAN,metric tons,4220.0,238000.0,220000.0,11000000.0,52.1,2076,33000,t,0.14,1.8,,,2023,USGS Mineral Commodity Summaries 2025
+Cobalt - Papua New Guinea,minerals-critical,cobalt-papua-new-guinea,Cobalt,Papua New Guinea,PNG,metric tons,3070.0,238000.0,62000.0,11000000.0,20.2,2044,33000,t,0.1,1.3,,,2023,USGS Mineral Commodity Summaries 2025
 Nickel - Indonesia,minerals-critical,nickel-indonesia,Nickel,Indonesia,IDN,metric tons,2030000.0,3750000.0,55000000.0,,27.1,2051,21521.12,$/t,43.69,54.1,,,2023,USGS Mineral Commodity Summaries 2025
 Nickel - Philippines,minerals-critical,nickel-philippines,Nickel,Philippines,PHL,metric tons,413000.0,3750000.0,4800000.0,,11.6,2035,21521.12,$/t,8.89,11.0,,,2023,USGS Mineral Commodity Summaries 2025
 Nickel - Russia,minerals-critical,nickel-russia,Nickel,Russia,RUS,metric tons,210000.0,3750000.0,8300000.0,,39.5,2063,21521.12,$/t,4.52,5.6,,,2023,USGS Mineral Commodity Summaries 2025
@@ -67,6 +73,7 @@ Copper - China,metals-industrial,copper-china,Copper,China,CHN,thousand metric t
 Copper - USA,metals-industrial,copper-usa,Copper,United States,USA,thousand metric tons,1130.0,22600.0,47000.0,980000.0,41.6,2065,8490.29,$/t,9.59,5.0,,,2023,USGS Mineral Commodity Summaries 2025
 Copper - Russia,metals-industrial,copper-russia,Copper,Russia,RUS,thousand metric tons,890.0,22600.0,80000.0,980000.0,89.9,2113,8490.29,$/t,7.56,3.9,,,2023,USGS Mineral Commodity Summaries 2025
 Copper - Zambia,metals-industrial,copper-zambia,Copper,Zambia,ZMB,thousand metric tons,712.0,22600.0,21000.0,980000.0,29.5,2053,8490.29,$/t,6.05,3.2,,,2023,USGS Mineral Commodity Summaries 2025
+Copper - Mexico,metals-industrial,copper-mexico,Copper,Mexico,MEX,thousand metric tons,699.0,22600.0,53000.0,980000.0,75.8,2099,8490.29,$/t,5.93,3.1,,,2023,USGS Mineral Commodity Summaries 2025
 Iron Ore - Australia,metals-industrial,iron-ore-australia,Iron Ore,Australia,AUS,thousand metric tons,953000.0,2530000.0,58000000.0,200000000.0,60.9,2084,120.57,$/t,114.9,37.7,,,2023,USGS Mineral Commodity Summaries 2025
 Iron Ore - Brazil,metals-industrial,iron-ore-brazil,Iron Ore,Brazil,BRA,thousand metric tons,445000.0,2530000.0,34000000.0,200000000.0,76.4,2100,120.57,$/t,53.65,17.6,,,2023,USGS Mineral Commodity Summaries 2025
 Iron Ore - China,metals-industrial,iron-ore-china,Iron Ore,China,CHN,thousand metric tons,278000.0,2530000.0,20000000.0,200000000.0,71.9,2095,120.57,$/t,33.52,11.0,,,2023,USGS Mineral Commodity Summaries 2025
@@ -77,10 +84,12 @@ Bauxite - Guinea,metals-industrial,bauxite-guinea,Bauxite,Guinea,GIN,thousand me
 Bauxite - China,metals-industrial,bauxite-china,Bauxite,China,CHN,thousand metric dry tons,91000.0,438000.0,680000.0,29000000.0,7.5,2031,35,t,3.19,20.8,,,2023,USGS Mineral Commodity Summaries 2025
 Bauxite - Brazil,metals-industrial,bauxite-brazil,Bauxite,Brazil,BRA,thousand metric dry tons,32000.0,438000.0,2700000.0,29000000.0,84.4,2108,35,t,1.12,7.3,,,2023,USGS Mineral Commodity Summaries 2025
 Bauxite - India,metals-industrial,bauxite-india,Bauxite,India,IND,thousand metric dry tons,23400.0,438000.0,650000.0,29000000.0,27.8,2051,35,t,0.82,5.3,,,2023,USGS Mineral Commodity Summaries 2025
+Bauxite - Jamaica,metals-industrial,bauxite-jamaica,Bauxite,Jamaica,JAM,thousand metric dry tons,6000.0,438000.0,2000000.0,29000000.0,333.3,2357,35,t,0.21,1.4,,,2023,USGS Mineral Commodity Summaries 2025
 Zinc - China,metals-industrial,zinc-china,Zinc,China,CHN,thousand metric tons,4060.0,12100.0,46000.0,230000.0,11.3,2035,2652.6,$/t,10.77,33.6,,,2023,USGS Mineral Commodity Summaries 2025
 Zinc - Peru,metals-industrial,zinc-peru,Zinc,Peru,PER,thousand metric tons,1470.0,12100.0,20000.0,230000.0,13.6,2037,2652.6,$/t,3.9,12.1,,,2023,USGS Mineral Commodity Summaries 2025
 Zinc - Australia,metals-industrial,zinc-australia,Zinc,Australia,AUS,thousand metric tons,1090.0,12100.0,64000.0,230000.0,58.7,2082,2652.6,$/t,2.89,9.0,,,2023,USGS Mineral Commodity Summaries 2025
 Zinc - India,metals-industrial,zinc-india,Zinc,India,IND,thousand metric tons,854.0,12100.0,9800.0,230000.0,11.5,2035,2652.6,$/t,2.27,7.1,,,2023,USGS Mineral Commodity Summaries 2025
+Zinc - Mexico,metals-industrial,zinc-mexico,Zinc,Mexico,MEX,thousand metric tons,584.0,12100.0,14000.0,230000.0,24.0,2048,2652.6,$/t,1.55,4.8,,,2023,USGS Mineral Commodity Summaries 2025
 Gold - China,precious-metals,gold-china,Gold,China,CHN,metric tons,375.0,3250.0,3100.0,64000.0,8.3,2032,1942.67,$/troy oz,23.42,11.5,,,2023,USGS Mineral Commodity Summaries 2025
 Gold - Russia,precious-metals,gold-russia,Gold,Russia,RUS,metric tons,313.0,3250.0,12000.0,64000.0,38.3,2062,1942.67,$/troy oz,19.55,9.6,,,2023,USGS Mineral Commodity Summaries 2025
 Gold - Australia,precious-metals,gold-australia,Gold,Australia,AUS,metric tons,296.0,3250.0,12000.0,64000.0,40.5,2064,1942.67,$/troy oz,18.49,9.1,,,2023,USGS Mineral Commodity Summaries 2025
@@ -88,6 +97,7 @@ Gold - Canada,precious-metals,gold-canada,Gold,Canada,CAN,metric tons,198.0,3250
 Gold - USA,precious-metals,gold-usa,Gold,United States,USA,metric tons,170.0,3250.0,3000.0,64000.0,17.6,2041,1942.67,$/troy oz,10.62,5.2,,,2023,USGS Mineral Commodity Summaries 2025
 Gold - Ghana,precious-metals,gold-ghana,Gold,Ghana,GHA,metric tons,126.0,3250.0,1000.0,64000.0,7.9,2031,1942.67,$/troy oz,7.87,3.9,,,2023,USGS Mineral Commodity Summaries 2025
 Gold - South Africa,precious-metals,gold-south-africa,Gold,South Africa,ZAF,metric tons,104.0,3250.0,5000.0,64000.0,48.1,2072,1942.67,$/troy oz,6.5,3.2,,,2023,USGS Mineral Commodity Summaries 2025
+Gold - Peru,precious-metals,gold-peru,Gold,Peru,PER,metric tons,100.0,3250.0,2500.0,64000.0,25.0,2049,1942.67,$/troy oz,6.25,3.1,,,2023,USGS Mineral Commodity Summaries 2025
 Silver - Mexico,precious-metals,silver-mexico,Silver,Mexico,MEX,metric tons,6290.0,25476.0,37000.0,640000.0,5.9,2029,23.4,$/troy oz,4.73,24.7,,,2023,USGS Mineral Commodity Summaries 2025
 Silver - China,precious-metals,silver-china,Silver,China,CHN,metric tons,3400.0,25476.0,70000.0,640000.0,20.6,2044,23.4,$/troy oz,2.56,13.3,,,2023,USGS Mineral Commodity Summaries 2025
 Silver - Peru,precious-metals,silver-peru,Silver,Peru,PER,metric tons,3200.0,25476.0,140000.0,640000.0,43.8,2067,23.4,$/troy oz,2.41,12.6,,,2023,USGS Mineral Commodity Summaries 2025

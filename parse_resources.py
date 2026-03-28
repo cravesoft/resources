@@ -37,7 +37,7 @@ OIL_RESERVES_GB = {          # proved reserves, billion barrels
     "USA": 68.8,  "SAU": 267.2, "RUS": 80.0,  "CAN": 170.3,
     "IRQ": 145.0, "ARE": 97.8,  "IRN": 208.6, "KWT": 101.5,
     "BRA": 15.0,  "CHN": 26.0,  "NOR": 8.1,   "KAZ": 30.0,
-    "QAT": 25.2,  "MEX": 5.8,   "NGA": 36.9,
+    "QAT": 25.2,  "MEX": 5.8,   "NGA": 36.9,  "VEN": 303.3,
 }
 GAS_RESERVES_TCM = {         # proved reserves, trillion cubic metres
     "USA": 12.6, "RUS": 37.4, "IRN": 34.0, "QAT": 25.0,
@@ -53,11 +53,11 @@ COAL_RESERVES_MT = {         # proved reserves, million tonnes
 # ── Static: uranium (World Nuclear Association 2024) ─────────────────────────
 URANIUM_PROD_TU = {          # mine production, tonnes U per year (2023)
     "KAZ": 21227, "CAN": 7000, "NAM": 5613,
-    "AUS": 4087,  "UZB": 3500, "RUS": 2984,
+    "AUS": 4087,  "UZB": 3500, "RUS": 2984,  "NER": 2020,
 }
 URANIUM_RESERVES_KTU = {     # identified reserves, kilotonnes U
     "AUS": 1720, "KAZ": 932, "CAN": 588,
-    "RUS": 510,  "NAM": 463, "UZB": 130,
+    "RUS": 510,  "NAM": 463, "UZB": 130,  "NER": 277,
 }
 
 # ── Static prices (2023 annual averages) not in World Bank Pink Sheet ────────
