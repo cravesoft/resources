@@ -175,6 +175,35 @@ body {
 }
 .gradient-legend canvas { border-radius: 2px; }
 
+.cb-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--fg2);
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  background: transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.cb-toggle:hover { background: rgba(255,255,255,0.04); color: var(--fg); }
+.cb-toggle.active {
+  background: rgba(255,255,255,0.08);
+  color: var(--fg);
+  border-color: rgba(255,255,255,0.2);
+}
+.cb-toggle-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+.cb-toggle.active .cb-toggle-dot { opacity: 1; }
+
 canvas#canvas {
   display: block;
   cursor: default;
@@ -256,6 +285,9 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
       <canvas id="gradientLegend" width="80" height="8"></canvas>
       <span id="legendHigh">Long reserve</span>
     </div>
+    <button class="cb-toggle" id="cbToggle" title="Switch to blue-orange palette for red-green color blindness">
+      <span class="cb-toggle-dot"></span>Color-blind mode
+    </button>
   </div>
 
   <div class="stats-row">
@@ -288,6 +320,7 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
 // ── Color scales ────────────────────────────────────────────────────────
 
 let colorMode = "rp";
+let colorblindMode = false;
 
 function boostContrast(t) {
   const c = (t - 0.5) * 2;
@@ -312,6 +345,30 @@ function greenRedCSS(t, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+// Color-blind safe blue→orange scale (replaces red/green).
+// Inspired by: https://gist.github.com/ro31337/89b24edaec0a5bfbf73bc5abfbfb17ce
+// t=0 → deep blue (safe/low), t=1 → deep orange (risky/high).
+function blueOrangeCSS(t, alpha) {
+  t = boostContrast(Math.max(0, Math.min(1, t)));
+  let r, g, b;
+  if (t < 0.5) {
+    const s = t / 0.5;
+    r = Math.round(20  + s * 200);  // 20  → 220
+    g = Math.round(100 + s * 100);  // 100 → 200
+    b = Math.round(200 - s * 120);  // 200 → 80
+  } else {
+    const s = (t - 0.5) / 0.5;
+    r = Math.round(220 + s *  10);  // 220 → 230
+    g = Math.round(200 - s * 110);  // 200 → 90
+    b = Math.round(80  - s *  65);  // 80  → 15
+  }
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function gradientCSS(t, alpha) {
+  return colorblindMode ? blueOrangeCSS(t, alpha) : greenRedCSS(t, alpha);
+}
+
 const CATEGORIES = [
   "fossil-fuels",
   "nuclear",
@@ -330,6 +387,16 @@ const CAT_COLORS = {
   "precious-metals":     [220, 190,  50],
 };
 
+// Okabe-Ito colorblind-safe palette
+const CAT_COLORS_CB = {
+  "fossil-fuels":        [230, 159,   0],  // orange
+  "nuclear":             [  0, 114, 178],  // blue
+  "minerals-critical":   [  0, 158, 115],  // bluish green
+  "rare-earth-elements": [213,  94,   0],  // vermilion
+  "metals-industrial":   [ 86, 180, 233],  // sky blue
+  "precious-metals":     [204, 121, 167],  // reddish purple
+};
+
 const CAT_LABELS = {
   "fossil-fuels":        "Fossil Fuels",
   "nuclear":             "Nuclear",
@@ -339,11 +406,11 @@ const CAT_LABELS = {
   "precious-metals":     "Precious Metals",
 };
 
-// R/P in years: <20=red, 200+=green (log scale)
+// R/P in years: <20=red/orange, 200+=green/blue (log scale)
 function rpColor(v, a) {
   if (v == null) return `rgba(128,128,128,${a})`;
   const t = Math.max(0, Math.min(1, Math.log(Math.max(1, v)) / Math.log(200)));
-  return greenRedCSS(1 - t, a);
+  return gradientCSS(1 - t, a);
 }
 
 // Price per unit: log scale, expensive=red
@@ -380,23 +447,24 @@ function normalizedPriceTon(d) {
   return d.pay;
 }
 
-// Color by $/t normalized price. Log scale: $100/t (coal) → green, $100M/t (gold) → red.
+// Color by $/t normalized price. Log scale: $100/t (coal) → green/blue, $100M/t (gold) → red/orange.
 function priceColor(v, a) {
   if (v == null) return `rgba(128,128,128,${a})`;
   const t = Math.max(0, Math.min(1, (Math.log10(Math.max(1, v)) - 2) / 6));
-  return greenRedCSS(t, a);
+  return gradientCSS(t, a);
 }
 
 function categoryColor(cat, a) {
-  const rgb = CAT_COLORS[cat];
+  const palette = colorblindMode ? CAT_COLORS_CB : CAT_COLORS;
+  const rgb = palette[cat];
   if (!rgb) return `rgba(128,128,128,${a})`;
   return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
 }
 
-// Geopolitical risk: 0=green (safe), 10=red (dangerous)
+// Geopolitical risk: 0=green/blue (safe), 10=red/orange (dangerous)
 function exposureColor(v, a) {
   if (v == null) return `rgba(128,128,128,${a})`;
-  return greenRedCSS(v / 10, a);
+  return gradientCSS(v / 10, a);
 }
 
 // Continent mapping and colors
@@ -426,10 +494,21 @@ const CONTINENT_COLORS = {
   "Europe":        [ 80, 130, 220],
 };
 
+// Okabe-Ito colorblind-safe continent palette
+const CONTINENT_COLORS_CB = {
+  "Asia":          [230, 159,   0],  // orange
+  "Africa":        [213,  94,   0],  // vermilion
+  "North America": [  0, 114, 178],  // blue
+  "South America": [204, 121, 167],  // reddish purple
+  "Oceania":       [ 86, 180, 233],  // sky blue
+  "Europe":        [  0, 158, 115],  // bluish green
+};
+
 function continentColor(country, a) {
   const cont = COUNTRY_CONTINENT[country];
   if (!cont) return `rgba(128,128,128,${a})`;
-  const rgb = CONTINENT_COLORS[cont];
+  const palette = colorblindMode ? CONTINENT_COLORS_CB : CONTINENT_COLORS;
+  const rgb = palette[cont];
   return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
 }
 
@@ -1030,9 +1109,8 @@ function drawGradientLegend() {
   } else {
     for (let x = 0; x < 80; x++) {
       const t = x / 79;
-      if (colorMode === "exposure") gctx.fillStyle = greenRedCSS(t, 1);
-      else if (colorMode === "rp")  gctx.fillStyle = greenRedCSS(1 - t, 1);
-      else                          gctx.fillStyle = greenRedCSS(t, 1);
+      if (colorMode === "rp") gctx.fillStyle = gradientCSS(1 - t, 1);
+      else                    gctx.fillStyle = gradientCSS(t, 1);
       gctx.fillRect(x, 0, 1, 8);
     }
   }
@@ -1040,6 +1118,15 @@ function drawGradientLegend() {
   document.getElementById("legendLow").textContent = cfg.low;
   document.getElementById("legendHigh").textContent = cfg.high;
 }
+
+// ── Color-blind toggle ────────────────────────────────────────────────
+
+document.getElementById("cbToggle").addEventListener("click", () => {
+  colorblindMode = !colorblindMode;
+  document.getElementById("cbToggle").classList.toggle("active", colorblindMode);
+  drawGradientLegend();
+  draw();
+});
 
 // ── Layer toggle ─────────────────────────────────────────────────────
 
