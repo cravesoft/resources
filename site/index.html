@@ -247,6 +247,7 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
         <button data-mode="price">Price</button>
         <button data-mode="category">Category</button>
         <button data-mode="country">Country</button>
+        <button data-mode="continent">Continent</button>
         <button data-mode="exposure">Geopolitical Risk</button>
       </div>
     </div>
@@ -409,12 +410,47 @@ function countryColor(country, a) {
   return `hsla(${COUNTRY_HUES[country]},65%,55%,${a})`;
 }
 
+// Continent mapping and colors
+const COUNTRY_CONTINENT = {
+  "Argentina": "South America", "Brazil": "South America", "Chile": "South America",
+  "Peru": "South America",
+  "Canada": "North America", "Mexico": "North America", "United States": "North America",
+  "Norway": "Europe", "Russia": "Europe",
+  "China": "Asia", "India": "Asia", "Indonesia": "Asia", "Iran": "Asia",
+  "Iraq": "Asia", "Kazakhstan": "Asia", "Kuwait": "Asia", "Myanmar": "Asia",
+  "Philippines": "Asia", "Qatar": "Asia", "Saudi Arabia": "Asia",
+  "United Arab Emirates": "Asia", "Uzbekistan": "Asia",
+  "Australia": "Oceania", "New Caledonia": "Oceania",
+  "Dem. Rep. Congo": "Africa", "Gabon": "Africa", "Ghana": "Africa",
+  "Guinea": "Africa", "Madagascar": "Africa", "Mozambique": "Africa",
+  "Namibia": "Africa", "South Africa": "Africa", "Zambia": "Africa",
+  "Zimbabwe": "Africa",
+};
+const CONTINENTS = ["Asia", "Africa", "North America", "South America", "Oceania", "Europe"];
+const CONTINENT_COLORS = {
+  "Asia":          [220,  80,  80],
+  "Africa":        [230, 150,  40],
+  "North America": [ 60, 180,  80],
+  "South America": [130,  80, 210],
+  "Oceania":       [ 40, 180, 190],
+  "Europe":        [ 80, 130, 220],
+};
+const CONTINENT_LABELS = CONTINENTS.reduce((o, c) => { o[c] = c; return o; }, {});
+
+function continentColor(country, a) {
+  const cont = COUNTRY_CONTINENT[country];
+  if (!cont) return `rgba(128,128,128,${a})`;
+  const rgb = CONTINENT_COLORS[cont];
+  return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
+}
+
 function tileColorCSS(d, alpha) {
-  if (colorMode === "rp")       return rpColor(d.rp_ratio, alpha);
-  if (colorMode === "price")    return priceColor(normalizedPriceTon(d), alpha);
-  if (colorMode === "category") return categoryColor(d.category, alpha);
-  if (colorMode === "country")  return countryColor(d.country, alpha);
-  if (colorMode === "exposure") return exposureColor(d.exposure, alpha);
+  if (colorMode === "rp")        return rpColor(d.rp_ratio, alpha);
+  if (colorMode === "price")     return priceColor(normalizedPriceTon(d), alpha);
+  if (colorMode === "category")  return categoryColor(d.category, alpha);
+  if (colorMode === "country")   return countryColor(d.country, alpha);
+  if (colorMode === "continent") return continentColor(d.country, alpha);
+  if (colorMode === "exposure")  return exposureColor(d.exposure, alpha);
   return `rgba(128,128,128,${alpha})`;
 }
 
@@ -439,6 +475,9 @@ function tileSubInfo(r) {
   }
   if (colorMode === "country") {
     return r.country + " \u00b7 " + val;
+  }
+  if (colorMode === "continent") {
+    return (COUNTRY_CONTINENT[r.country] || r.country) + " \u00b7 " + val;
   }
   if (colorMode === "exposure") {
     return (r.exposure != null ? r.exposure + "/10 risk" : "unscored") + " \u00b7 " + val;
@@ -601,6 +640,11 @@ function tooltipHighlight(d) {
     const color = countryColor(d.country, 1);
     return `<span style="color:${color};font-weight:600;">${d.country}</span>`;
   }
+  if (colorMode === "continent") {
+    const cont = COUNTRY_CONTINENT[d.country] || d.country;
+    const color = continentColor(d.country, 1);
+    return `<span style="color:${color};font-weight:600;">${cont}</span>`;
+  }
   if (colorMode === "exposure") {
     const v = d.exposure;
     if (v == null) return `<span style="color:var(--fg2);">Geopolitical Risk: not yet scored</span>`;
@@ -662,11 +706,12 @@ function updateStats() {
   const totalValue = data.reduce((s, d) => s + (d.value || 0), 0);
   document.getElementById("statTotalValue").textContent = formatValue(totalValue);
 
-  if (colorMode === "rp")            updateRpStats(totalValue);
-  else if (colorMode === "price")    updatePriceStats(totalValue);
-  else if (colorMode === "category") updateCategoryStats(totalValue);
-  else if (colorMode === "country")  updateCountryStats(totalValue);
-  else                               updateExposureStats(totalValue);
+  if (colorMode === "rp")             updateRpStats(totalValue);
+  else if (colorMode === "price")     updatePriceStats(totalValue);
+  else if (colorMode === "category")  updateCategoryStats(totalValue);
+  else if (colorMode === "country")   updateCountryStats(totalValue);
+  else if (colorMode === "continent") updateContinentStats(totalValue);
+  else                                updateExposureStats(totalValue);
 }
 
 function updateRpStats(totalValue) {
@@ -844,6 +889,54 @@ function updateCountryStats(totalValue) {
   document.getElementById("block8").innerHTML = "";
 }
 
+function updateContinentStats(totalValue) {
+  const byCont = {};
+  for (const d of data) {
+    const cont = COUNTRY_CONTINENT[d.country] || "Other";
+    if (!byCont[cont]) byCont[cont] = {value: 0, risk: 0, riskCount: 0};
+    byCont[cont].value += d.value || 0;
+    if (d.exposure != null) { byCont[cont].risk += d.exposure; byCont[cont].riskCount++; }
+  }
+  const conts = CONTINENTS.map(c => ({
+    cont: c, value: byCont[c] ? byCont[c].value : 0,
+    avgRisk: byCont[c] && byCont[c].riskCount > 0 ? byCont[c].risk / byCont[c].riskCount : null,
+    jobs: byCont[c] ? byCont[c].value : 0,
+    label: c, color: (() => { const rgb = CONTINENT_COLORS[c]; return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`; })(),
+  })).sort((a, b) => b.value - a.value);
+
+  const top = conts[0];
+  document.getElementById("block2").innerHTML = `<h3>Largest continent</h3>
+    <div class="stat-big" style="color:${top.color};font-size:20px;letter-spacing:-0.01em">${top.cont}</div>
+    <div class="stat-label">${formatValue(top.value)} \u00b7 ${(top.value / totalValue * 100).toFixed(0)}% of total</div>`;
+
+  document.getElementById("block3").innerHTML = `<h3>Value by continent</h3><div class="tier-bar">${renderTiers(conts, totalValue)}</div>`;
+
+  // Avg R/P by continent
+  const rpByCont = CONTINENTS.map(c => {
+    let wS = 0, wC = 0;
+    for (const d of data) {
+      if (COUNTRY_CONTINENT[d.country] === c && d.rp_ratio != null && d.value)
+        { wS += d.rp_ratio * d.value; wC += d.value; }
+    }
+    return {label: c, avg: wC > 0 ? wS / wC : null};
+  });
+  document.getElementById("block4").innerHTML = `<h3>R/P by continent</h3><div class="hbar-chart">${renderHbars(rpByCont.filter(g => g.avg != null).map(g => ({
+    label: g.label, val: g.avg.toFixed(0) + "yr",
+    pct: Math.max(0, Math.min(100, Math.log(Math.max(1, g.avg)) / Math.log(200) * 100)),
+    color: rpColor(g.avg, 0.8),
+  })))}</div>`;
+
+  // Avg geopolitical risk by continent
+  const riskByCont = conts.filter(c => c.avgRisk != null);
+  document.getElementById("block5").innerHTML = `<h3>Geo risk by continent</h3><div class="hbar-chart">${renderHbars(riskByCont.map(g => ({
+    label: g.cont, val: g.avgRisk.toFixed(1), pct: g.avgRisk / 10 * 100, color: exposureColor(g.avgRisk, 0.8),
+  })))}</div>`;
+
+  document.getElementById("block6").innerHTML = "";
+  document.getElementById("block7").innerHTML = "";
+  document.getElementById("block8").innerHTML = "";
+}
+
 function updateExposureStats(totalValue) {
   let wS = 0, wC = 0;
   for (const d of data) { if (d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
@@ -907,11 +1000,12 @@ function resize() { dpr = window.devicePixelRatio || 1; layout(); draw(); }
 // ── Legend gradient ────────────────────────────────────────────────────
 
 const LEGEND_CONFIG = {
-  rp:       { low: "Depleting", high: "Long reserve" },
-  price:    { low: "Cheap", high: "Expensive" },
-  category: { low: "Fossil Fuels", high: "Precious Metals" },
-  country:  { low: "", high: "" },
-  exposure: { low: "Low risk", high: "High risk" },
+  rp:        { low: "Depleting", high: "Long reserve" },
+  price:     { low: "Cheap", high: "Expensive" },
+  category:  { low: "Fossil Fuels", high: "Precious Metals" },
+  country:   { low: "", high: "" },
+  continent: { low: "", high: "" },
+  exposure:  { low: "Low risk", high: "High risk" },
 };
 
 function drawGradientLegend() {
@@ -924,11 +1018,17 @@ function drawGradientLegend() {
       gctx.fillRect(i * sw, 0, sw, 8);
     });
   } else if (colorMode === "country") {
-    // Draw rainbow hue gradient
     for (let x = 0; x < 80; x++) {
       gctx.fillStyle = `hsl(${x / 79 * 360},65%,55%)`;
       gctx.fillRect(x, 0, 1, 8);
     }
+  } else if (colorMode === "continent") {
+    const sw = 80 / CONTINENTS.length;
+    CONTINENTS.forEach((cont, i) => {
+      const rgb = CONTINENT_COLORS[cont];
+      gctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`;
+      gctx.fillRect(i * sw, 0, sw, 8);
+    });
   } else {
     for (let x = 0; x < 80; x++) {
       const t = x / 79;
