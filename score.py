@@ -1,14 +1,14 @@
 """
-Score each occupation's AI exposure using an LLM via OpenRouter.
+Score each resource's geopolitical risk using an LLM via Google AI Studio.
 
 Reads Markdown descriptions from pages/, sends each to an LLM with a scoring
 rubric, and collects structured scores. Results are cached incrementally to
-scores.json so the script can be resumed if interrupted.
+resource_scores.json so the script can be resumed if interrupted.
 
 Usage:
     uv run python score.py
-    uv run python score.py --model google/gemini-3-flash-preview
-    uv run python score.py --start 0 --end 10   # test on first 10
+    uv run python score.py --model gemini-2.0-flash
+    uv run python score.py --start 0 --end 5   # test on first 5
 """
 
 import argparse
@@ -20,67 +20,64 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEFAULT_MODEL = "google/gemini-3-flash-preview"
-OUTPUT_FILE = "scores.json"
-API_URL = "https://openrouter.ai/api/v1/chat/completions"
+DEFAULT_MODEL = "gemini-2.5-flash"
+OUTPUT_FILE = "resource_scores.json"
+API_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 
 SYSTEM_PROMPT = """\
-You are an expert analyst evaluating how exposed different occupations are to \
-AI. You will be given a detailed description of an occupation from the Bureau \
-of Labor Statistics.
+You are an expert analyst in critical minerals, energy security, and \
+geopolitical risk. You will be given a description of a non-renewable natural \
+resource produced in a specific country.
 
-Rate the occupation's overall **AI Exposure** on a scale from 0 to 10.
+Rate the **Geopolitical Risk** of this resource-country pair on a scale from \
+0 to 10.
 
-AI Exposure measures: how much will AI reshape this occupation? Consider both \
-direct effects (AI automating tasks currently done by humans) and indirect \
-effects (AI making each worker so productive that fewer are needed).
-
-A key signal is whether the job's work product is fundamentally digital. If \
-the job can be done entirely from a home office on a computer — writing, \
-coding, analyzing, communicating — then AI exposure is inherently high (7+), \
-because AI capabilities in digital domains are advancing rapidly. Even if \
-today's AI can't handle every aspect of such a job, the trajectory is steep \
-and the ceiling is very high. Conversely, jobs requiring physical presence, \
-manual skill, or real-time human interaction in the physical world have a \
-natural barrier to AI exposure.
+Geopolitical Risk measures how likely it is that supply of this resource from \
+this country will be disrupted, weaponized, or withheld in ways that cause \
+serious harm to importing economies. Consider:
+- The producing country's political stability and governance quality
+- Historical precedent of supply disruptions or export weaponization
+- Market concentration (is this country a dominant or irreplaceable supplier?)
+- Dependence of importing economies (are substitutes or alternative suppliers \
+readily available?)
+- Alignment with or hostility to major consumer blocs (NATO, EU, US, \
+Japan/Korea)
+- Strategic importance of the resource to defense, energy, or technology \
+industries
 
 Use these anchors to calibrate your score:
 
-- **0–1: Minimal exposure.** The work is almost entirely physical, hands-on, \
-or requires real-time human presence in unpredictable environments. AI has \
-essentially no impact on daily work. \
-Examples: roofer, landscaper, commercial diver.
+- **0–1: Minimal risk.** Stable democratic producer, multiple alternative \
+suppliers globally, commodity is easily substituted or stockpiled. \
+Examples: iron ore from Australia, natural gas from Norway.
 
-- **2–3: Low exposure.** Mostly physical or interpersonal work. AI might help \
-with minor peripheral tasks (scheduling, paperwork) but doesn't touch the \
-core job. \
-Examples: electrician, plumber, firefighter, dental hygienist.
+- **2–3: Low risk.** Mostly stable producer with some political risk, or \
+moderately concentrated supply but alternatives exist. \
+Examples: copper from Chile, uranium from Canada.
 
-- **4–5: Moderate exposure.** A mix of physical/interpersonal work and \
-knowledge work. AI can meaningfully assist with the information-processing \
-parts but a substantial share of the job still requires human presence. \
-Examples: registered nurse, police officer, veterinarian.
+- **4–5: Moderate risk.** Producer has significant governance concerns OR \
+supply is somewhat concentrated, but not both simultaneously. \
+Examples: uranium from Kazakhstan, nickel from Indonesia.
 
-- **6–7: High exposure.** Predominantly knowledge work with some need for \
-human judgment, relationships, or physical presence. AI tools are already \
-useful and workers using AI may be substantially more productive. \
-Examples: teacher, manager, accountant, journalist.
+- **6–7: High risk.** Dominant or near-monopoly supplier with a track record \
+of politically motivated export restrictions, OR a resource critical to \
+defense/tech industries from a country with serious governance instability. \
+Examples: cobalt from DRC, natural gas from Russia (post-2022 precedent set).
 
-- **8–9: Very high exposure.** The job is almost entirely done on a computer. \
-All core tasks — writing, coding, analyzing, designing, communicating — are \
-in domains where AI is rapidly improving. The occupation faces major \
-restructuring. \
-Examples: software developer, graphic designer, translator, data analyst, \
-paralegal, copywriter.
+- **8–9: Very high risk.** Near-monopoly control of a strategically critical \
+resource by a country with demonstrated willingness to use supply as \
+geopolitical leverage. \
+Examples: rare earth elements from China, cobalt from DRC with Chinese \
+corporate control of processing.
 
-- **10: Maximum exposure.** Routine information processing, fully digital, \
-with no physical component. AI can already do most of it today. \
-Examples: data entry clerk, telemarketer.
+- **10: Maximum risk.** Complete or effective monopoly of an irreplaceable, \
+defense-critical resource combined with active geopolitical confrontation \
+between producer and major consumers. Currently hypothetical at pure score 10.
 
 Respond with ONLY a JSON object in this exact format, no other text:
 {
-  "exposure": <0-10>,
-  "rationale": "<2-3 sentences explaining the key factors>"
+  "exposure": <integer 0-10>,
+  "rationale": "<2-3 sentences explaining the key risk factors>"
 }\
 """
 
@@ -90,7 +87,7 @@ def score_occupation(client, text, model):
     response = client.post(
         API_URL,
         headers={
-            "Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}",
+            "Authorization": f"Bearer {os.environ['GEMINI_API_KEY']}",
         },
         json={
             "model": model,
@@ -126,7 +123,7 @@ def main():
                         help="Re-score even if already cached")
     args = parser.parse_args()
 
-    with open("occupations.json") as f:
+    with open("resources.json") as f:
         occupations = json.load(f)
 
     subset = occupations[args.start:args.end]
@@ -138,7 +135,7 @@ def main():
             for entry in json.load(f):
                 scores[entry["slug"]] = entry
 
-    print(f"Scoring {len(subset)} occupations with {args.model}")
+    print(f"Scoring {len(subset)} resources with {args.model}")
     print(f"Already cached: {len(scores)}")
 
     errors = []
@@ -163,11 +160,13 @@ def main():
         try:
             result = score_occupation(client, text, args.model)
             scores[slug] = {
-                "slug": slug,
-                "title": occ["title"],
+                "slug":      slug,
+                "title":     occ["title"],
+                "commodity": occ["commodity"],
+                "country":   occ["country"],
                 **result,
             }
-            print(f"exposure={result['exposure']}")
+            print(f"risk={result['exposure']}")
         except Exception as e:
             print(f"ERROR: {e}")
             errors.append(slug)
