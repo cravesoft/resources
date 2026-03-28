@@ -347,25 +347,39 @@ function rpColor(v, a) {
 
 // Price per unit: log scale, expensive=red
 // Normalize any commodity price to $/metric ton for cross-commodity comparison.
-// Conversion factors:
-//   $/bbl     → $/t  : ×7.33   (crude oil, ~7.33 bbl per tonne)
-//   $/mmbtu   → $/t  : ×52.37  (natural gas, LNG equivalent)
-//   $/troy oz → $/t  : ×32150.75
-//   dmtu      → $/t  : ×44     (manganese ore, ≈44% Mn grade)
-//   lb U₃O₈   → $/t  : ×2204.62
-//   t / t(*) → already $/t
+//
+// $/bbl → $/t  : ×7.33
+//   1 metric ton of crude oil ≈ 7.33 barrels (standard API/IEA conversion for
+//   medium crude ~35° API gravity; varies slightly by grade).
+//
+// $/mmbtu → $/t  : ×52.37
+//   1 metric ton of LNG ≈ 52.37 MMBtu (higher heating value, IGU/IEA standard
+//   for converting volumetric gas prices to a mass basis).
+//
+// $/troy oz → $/t  : ×32,150.75
+//   Exact: 1 metric ton = 32,150.7466 troy ounces.
+//
+// dmtu → $/t  : ×44
+//   1 dry metric ton unit = 1% of a dry metric ton of ore. Traded manganese ore
+//   averages ≈44% Mn grade (USGS benchmark), so 1 tonne = 44 dmtu.
+//   Approximation — mine grades range 35–52%.
+//
+// lb U₃O₈ → $/t  : ×2,204.62
+//   Exact: 1 metric ton = 2,204.623 lb. Price kept in U₃O₈ terms (not pure U).
+//
+// t / t(*) : already $/metric ton, no conversion needed.
 function normalizedPriceTon(d) {
   if (d.pay == null) return null;
   const u = d.price_unit || '';
-  if (u === '$/bbl')     return d.pay * 7.33;
-  if (u === '$/mmbtu')   return d.pay * 52.37;
-  if (u === '$/troy oz') return d.pay * 32150.75;
-  if (u === 'dmtu')      return d.pay * 44;
+  if (u === '$/bbl')      return d.pay * 7.33;
+  if (u === '$/mmbtu')    return d.pay * 52.37;
+  if (u === '$/troy oz')  return d.pay * 32150.75;
+  if (u === 'dmtu')       return d.pay * 44;
   if (u.startsWith('lb')) return d.pay * 2204.62;
   return d.pay;
 }
 
-// Color by $/t normalized price. Log scale: $100/t → green, $10M/t → red.
+// Color by $/t normalized price. Log scale: $100/t (coal) → green, $100M/t (gold) → red.
 function priceColor(v, a) {
   if (v == null) return `rgba(128,128,128,${a})`;
   const t = Math.max(0, Math.min(1, (Math.log10(Math.max(1, v)) - 2) / 6));
