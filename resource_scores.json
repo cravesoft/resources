@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "coal-china",
+    "title": "Coal - China",
+    "commodity": "Coal",
+    "country": "China",
+    "exposure": 1,
+    "rationale": "China is the world's largest coal producer but is also a net importer, consuming almost all of its vast domestic output. Consequently, there is minimal dependence of importing economies on Chinese coal exports, significantly reducing the geopolitical risk of supply disruption or weaponization from this source."
+  },
+  {
+    "slug": "coal-india",
+    "title": "Coal - India",
+    "commodity": "Coal",
+    "country": "India",
+    "exposure": 1,
+    "rationale": "India is a major global producer of coal, but its output is primarily for domestic consumption, making it a net importer rather than a significant exporter. Consequently, there is minimal risk of India weaponizing or disrupting coal supplies to international markets, as other economies are not dependent on Indian coal exports."
+  },
+  {
+    "slug": "coal-usa",
+    "title": "Coal - USA",
+    "commodity": "Coal",
+    "country": "United States",
+    "exposure": 1,
+    "rationale": "The United States is a highly stable democratic producer with no history of weaponizing its exports. Its share of global coal production is relatively small (6%), and coal is a widely available commodity with numerous alternative suppliers worldwide, minimizing import dependence."
+  },
+  {
+    "slug": "coal-australia",
+    "title": "Coal - Australia",
+    "commodity": "Coal",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country with a strong rule of law and no history of weaponizing its resource exports. While a significant producer, it is not a dominant global supplier of coal, and alternative sources are readily available, leading to minimal geopolitical risk."
+  },
+  {
+    "slug": "coal-indonesia",
+    "title": "Coal - Indonesia",
+    "commodity": "Coal",
+    "country": "Indonesia",
+    "exposure": 6,
+    "rationale": "Indonesia is the world's largest thermal coal exporter, making importing economies highly dependent on its supply. The country has a track record of implementing export restrictions and temporary bans (e.g., 2022) to prioritize domestic needs, causing significant market disruptions and price volatility for major Asian consumers. While generally stable, this willingness to restrict exports for national interests poses a substantial geopolitical risk."
+  },
+  {
+    "slug": "crude-oil-saudi-arabia",
+    "title": "Crude Oil - Saudi Arabia",
+    "commodity": "Crude Oil",
+    "country": "Saudi Arabia",
+    "exposure": 7,
+    "rationale": "Saudi Arabia is a major global crude oil producer (11.9% share) and the primary swing producer, giving it significant market power. It has a historical precedent of using oil as geopolitical leverage (1973 embargo) and more recently through OPEC+ production cuts. The resource is critical to global energy security, and while not a monopoly, its influence and sometimes misaligned interests with major consumer blocs pose a high risk."
+  },
+  {
+    "slug": "crude-oil-russia",
+    "title": "Crude Oil - Russia",
+    "commodity": "Crude Oil",
+    "country": "Russia",
+    "exposure": 8,
+    "rationale": "Russia is actively hostile to major consumer blocs and has a clear precedent of weaponizing energy exports, as demonstrated with natural gas. While not a global monopoly, its 12.5% share of crude oil production is strategically significant, meaning any disruption or politically motivated restriction would severely impact global supply and prices."
+  },
+  {
+    "slug": "crude-oil-canada",
+    "title": "Crude Oil - Canada",
+    "commodity": "Crude Oil",
+    "country": "Canada",
+    "exposure": 1,
+    "rationale": "Canada is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing its energy exports. While a significant producer, its 5.6% share of global crude oil production means there are multiple alternative suppliers, mitigating market concentration risk."
+  },
+  {
+    "slug": "crude-oil-iraq",
+    "title": "Crude Oil - Iraq",
+    "commodity": "Crude Oil",
+    "country": "Iraq",
+    "exposure": 7,
+    "rationale": "Iraq faces severe and persistent political instability, internal conflicts, and weak governance, which frequently lead to disruptions in its significant crude oil production and export infrastructure. While not a dominant supplier, its 5.3% share of global output is substantial, meaning any prolonged disruption would seriously impact global oil markets and prices, despite the availability of alternative suppliers."
+  },
+  {
+    "slug": "crude-oil-uae",
+    "title": "Crude Oil - UAE",
+    "commodity": "Crude Oil",
+    "country": "United Arab Emirates",
+    "exposure": 4,
+    "rationale": "The UAE is a stable, non-democratic producer, accounting for a significant but not dominant 4.5% of global crude oil supply. While crude oil is a critical resource, the UAE has historically been a reliable supplier and is generally aligned with major consumer blocs, mitigating direct weaponization risk. The primary geopolitical risk stems from regional instability in the Middle East rather than internal governance issues or a track record of export restrictions by the UAE itself."
+  },
+  {
+    "slug": "crude-oil-iran",
+    "title": "Crude Oil - Iran",
+    "commodity": "Crude Oil",
+    "country": "Iran",
+    "exposure": 8,
+    "rationale": "Iran is an authoritarian regime actively hostile to major consumer blocs, leading to decades of sanctions and politically-driven supply disruptions. While not a dominant global supplier, its 4.3% share of crude oil is significant, and any disruption due to geopolitical tensions or conflict would cause severe global price shocks, harming importing economies."
+  },
+  {
+    "slug": "natural-gas-usa",
+    "title": "Natural Gas - USA",
+    "commodity": "Natural Gas",
+    "country": "United States",
+    "exposure": 1,
+    "rationale": "The United States is a highly stable democratic producer and a close ally to major consumer blocs. While a significant global producer (25.8% share), it has no history of weaponizing natural gas exports; instead, it has actively increased supply to support allies. The risk of politically motivated supply disruption from the US is minimal."
+  },
+  {
+    "slug": "natural-gas-russia",
+    "title": "Natural Gas - Russia",
+    "commodity": "Natural Gas",
+    "country": "Russia",
+    "exposure": 7,
+    "rationale": "Russia has a clear and recent track record of weaponizing natural gas supply, particularly against European economies following its invasion of Ukraine. Despite not being a global near-monopoly, its historical dominance in pipeline supply to Europe and active geopolitical confrontation with major consumer blocs make supply highly vulnerable to disruption and leverage."
+  },
+  {
+    "slug": "natural-gas-iran",
+    "title": "Natural Gas - Iran",
+    "commodity": "Natural Gas",
+    "country": "Iran",
+    "exposure": 7,
+    "rationale": "Iran's regime is highly unstable, authoritarian, and actively hostile to major consumer blocs, facing extensive international sanctions. While not a dominant global supplier, any existing natural gas exports are highly vulnerable to disruption due to geopolitical tensions, internal instability, or further sanctions. Natural gas is a critical energy resource, making supply from such a producer inherently high risk."
+  },
+  {
+    "slug": "natural-gas-qatar",
+    "title": "Natural Gas - Qatar",
+    "commodity": "Natural Gas",
+    "country": "Qatar",
+    "exposure": 4,
+    "rationale": "Qatar is a major global LNG exporter, accounting for approximately 20% of the seaborne gas market, making its supply significant for importing economies. While an absolute monarchy, it has a strong track record as a reliable supplier, even amidst regional geopolitical tensions. Its general alignment with major consumer blocs and lack of historical weaponization mitigate risk, but its non-democratic governance and regional volatility present some underlying geopolitical exposure."
+  },
+  {
+    "slug": "natural-gas-china",
+    "title": "Natural Gas - China",
+    "commodity": "Natural Gas",
+    "country": "China",
+    "exposure": 0,
+    "rationale": "China is a net importer of natural gas, with its domestic production primarily serving its own substantial energy needs. It is not a significant exporter to global markets, meaning there is virtually no risk of China weaponizing natural gas supply against importing economies."
+  },
+  {
+    "slug": "natural-gas-australia",
+    "title": "Natural Gas - Australia",
+    "commodity": "Natural Gas",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country with strong governance and a reliable track record as an energy exporter. While a significant LNG producer, it is not a dominant global supplier, and importing economies have access to multiple alternative sources, mitigating supply disruption risks."
+  },
+  {
+    "slug": "uranium-kazakhstan",
+    "title": "Uranium - Kazakhstan",
+    "commodity": "Uranium",
+    "country": "Kazakhstan",
+    "exposure": 6,
+    "rationale": "Kazakhstan is a dominant supplier, accounting for nearly half of global uranium production, a critical resource for energy security. The country's authoritarian governance and history of political instability (e.g., 2022 unrest) pose significant disruption risks. Furthermore, a substantial portion of Kazakh uranium transits through Russia, adding a layer of geopolitical vulnerability given current international tensions."
+  },
+  {
+    "slug": "uranium-canada",
+    "title": "Uranium - Canada",
+    "commodity": "Uranium",
+    "country": "Canada",
+    "exposure": 2,
+    "rationale": "Canada is a highly stable, democratic country and a close geopolitical ally of major uranium-consuming nations. It has a strong track record as a reliable supplier with no history of export weaponization. While a significant producer, its share of global supply is not dominant, and alternative sources are available."
+  },
+  {
+    "slug": "uranium-namibia",
+    "title": "Uranium - Namibia",
+    "commodity": "Uranium",
+    "country": "Namibia",
+    "exposure": 3,
+    "rationale": "Namibia is a politically stable democracy with a good governance record and no history of weaponizing its uranium exports. While its 12.6% share of global production is significant, it is not a dominant supplier, and other major producers offer diversification for importing economies."
+  },
+  {
+    "slug": "cobalt-drc",
+    "title": "Cobalt - DRC",
+    "commodity": "Cobalt",
+    "country": "Dem. Rep. Congo",
+    "exposure": 8,
+    "rationale": "The Democratic Republic of Congo is a near-monopoly supplier of cobalt (73.5% of global production), a critical mineral for EV batteries and high-tech industries. The country suffers from extreme political instability, poor governance, and conflict, posing a constant threat of supply disruption. Furthermore, significant Chinese corporate control over DRC's cobalt mining and processing introduces a layer of geopolitical leverage risk."
+  }
+]
