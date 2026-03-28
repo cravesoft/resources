@@ -259,7 +259,7 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
   <div class="stats-row">
     <div class="stat-section">
       <h3>Total production value</h3>
-      <div class="stat-big" id="statTotalJobs">&mdash;</div>
+      <div class="stat-big" id="statTotalValue">&mdash;</div>
     </div>
     <div class="stat-section" id="block2"></div>
     <div class="stat-section" id="block3"></div>
@@ -379,7 +379,7 @@ function formatValue(v) {
 }
 
 function tileSubInfo(r) {
-  const val = r.jobs != null ? formatValue(r.jobs) : "\u2014";
+  const val = r.value != null ? formatValue(r.value) : "\u2014";
   if (colorMode === "rp") {
     return (r.rp_ratio != null ? r.rp_ratio.toFixed(0) + "yr R/P" : "") + " \u00b7 " + val;
   }
@@ -467,13 +467,13 @@ function layout() {
   const byCategory = {};
   for (const d of data) { if (!byCategory[d.category]) byCategory[d.category] = []; byCategory[d.category].push(d); }
   const categories = Object.keys(byCategory).map(cat => ({
-    cat, items: byCategory[cat].sort((a, b) => (b.jobs || 0) - (a.jobs || 0)),
-    value: byCategory[cat].reduce((s, d) => s + (d.jobs || 1), 0),
+    cat, items: byCategory[cat].sort((a, b) => (b.value || 0) - (a.value || 0)),
+    value: byCategory[cat].reduce((s, d) => s + (d.value || 1), 0),
   })).sort((a, b) => b.value - a.value);
   const catRects = squarify(categories, tx, ty, tw, th);
   rects = [];
   for (const cr of catRects) {
-    const items = cr.items.map(d => ({ ...d, value: d.jobs || 1 }));
+    const items = cr.items.map(d => ({ ...d, value: d.value || 1 }));
     const innerRects = squarify(items, cr.rx + GAP, cr.ry + GAP, cr.rw - GAP * 2, cr.rh - GAP * 2);
     for (const ir of innerRects) rects.push(ir);
   }
@@ -566,7 +566,7 @@ function showTooltip(d, mx, my) {
     ? d.production.toLocaleString() + " " + (d.production_unit || "")
     : "\u2014";
   tt.querySelector(".tt-stats").innerHTML = `
-    <span class="label">Prod. value</span><span class="value">${formatValue(d.jobs)}</span>
+    <span class="label">Prod. value</span><span class="value">${formatValue(d.value)}</span>
     <span class="label">Production</span><span class="value">${prod}</span>
     <span class="label">World share</span><span class="value">${share}</span>
     <span class="label">R/P ratio</span><span class="value">${rp}</span>`;
@@ -587,8 +587,8 @@ function renderTiers(tiers, totalValue) {
   return tiers.map(t => `<div class="tier-row">
     <div class="tier-color" style="background:${t.color}"></div>
     <span class="tier-name">${t.label}</span>
-    <span class="tier-jobs">${formatValue(t.jobs)}</span>
-    <span class="tier-pct">${totalValue > 0 ? (t.jobs / totalValue * 100).toFixed(0) : 0}%</span>
+    <span class="tier-jobs">${formatValue(t.value)}</span>
+    <span class="tier-pct">${totalValue > 0 ? (t.value / totalValue * 100).toFixed(0) : 0}%</span>
   </div>`).join("");
 }
 
@@ -603,8 +603,8 @@ function renderHbars(items) {
 // ── Layer-specific stats ────────────────────────────────────────────────
 
 function updateStats() {
-  const totalValue = data.reduce((s, d) => s + (d.jobs || 0), 0);
-  document.getElementById("statTotalJobs").textContent = formatValue(totalValue);
+  const totalValue = data.reduce((s, d) => s + (d.value || 0), 0);
+  document.getElementById("statTotalValue").textContent = formatValue(totalValue);
 
   if (colorMode === "rp")            updateRpStats(totalValue);
   else if (colorMode === "price")    updatePriceStats(totalValue);
@@ -614,7 +614,7 @@ function updateStats() {
 
 function updateRpStats(totalValue) {
   let wS = 0, wC = 0;
-  for (const d of data) { if (d.rp_ratio != null && d.jobs) { wS += d.rp_ratio * d.jobs; wC += d.jobs; } }
+  for (const d of data) { if (d.rp_ratio != null && d.value) { wS += d.rp_ratio * d.value; wC += d.value; } }
   const avg = wC > 0 ? wS / wC : 0;
   document.getElementById("block2").innerHTML = `<h3>Avg. R/P ratio</h3>
     <div class="stat-big"><span style="color:${rpColor(avg, 1)}">${avg.toFixed(0)}<span style="font-size:18px;font-weight:400"> yr</span></span></div>
@@ -623,9 +623,9 @@ function updateRpStats(totalValue) {
   const buckets = [{lo:0,hi:20,mid:10},{lo:20,hi:50,mid:35},{lo:50,hi:100,mid:75},{lo:100,hi:200,mid:150},{lo:200,hi:Infinity,mid:300}];
   const histV = buckets.map(() => 0);
   for (const d of data) {
-    if (d.rp_ratio != null && d.jobs) {
+    if (d.rp_ratio != null && d.value) {
       const i = buckets.findIndex(b => d.rp_ratio >= b.lo && d.rp_ratio < b.hi);
-      if (i >= 0) histV[i] += d.jobs;
+      if (i >= 0) histV[i] += d.value;
     }
   }
   const maxH = Math.max(...histV, 1);
@@ -641,14 +641,14 @@ function updateRpStats(totalValue) {
   ];
   const tiers = tierDefs.map(t => {
     let val = 0;
-    for (const d of data) { if (d.rp_ratio != null && d.jobs && d.rp_ratio >= t.lo && d.rp_ratio < t.hi) val += d.jobs; }
-    return {...t, jobs: val, color: rpColor(t.mid, 1)};
+    for (const d of data) { if (d.rp_ratio != null && d.value && d.rp_ratio >= t.lo && d.rp_ratio < t.hi) val += d.value; }
+    return {...t, value: val, color: rpColor(t.mid, 1)};
   });
   document.getElementById("block4").innerHTML = `<h3>R/P tiers</h3><div class="tier-bar">${renderTiers(tiers, totalValue)}</div>`;
 
   const byCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
-    for (const d of data) { if (d.category === cat && d.rp_ratio != null && d.jobs) { wS += d.rp_ratio * d.jobs; wC += d.jobs; } }
+    for (const d of data) { if (d.category === cat && d.rp_ratio != null && d.value) { wS += d.rp_ratio * d.value; wC += d.value; } }
     return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ",""), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block5").innerHTML = `<h3>R/P by category</h3><div class="hbar-chart">${renderHbars(byCat.filter(g => g.avg != null).map(g => ({
@@ -658,7 +658,7 @@ function updateRpStats(totalValue) {
   })))}</div>`;
 
   let critVal = 0;
-  for (const d of data) { if (d.rp_ratio != null && d.rp_ratio < 20 && d.jobs) critVal += d.jobs; }
+  for (const d of data) { if (d.rp_ratio != null && d.rp_ratio < 20 && d.value) critVal += d.value; }
   document.getElementById("block6").innerHTML = `<h3>Critical R/P value</h3>
     <div class="stat-big" style="color:${rpColor(10, 1)}">${formatValue(critVal)}</div>
     <div class="stat-label">resources with &lt;20yr remaining</div>`;
@@ -674,7 +674,7 @@ function updatePriceStats(totalValue) {
 
   const byCat = CATEGORIES.map(cat => {
     let val = 0;
-    for (const d of data) { if (d.category === cat && d.jobs) val += d.jobs; }
+    for (const d of data) { if (d.category === cat && d.value) val += d.value; }
     return {cat, val, label: CAT_LABELS[cat]};
   }).sort((a, b) => b.val - a.val);
   const maxV = Math.max(...byCat.map(g => g.val), 1);
@@ -686,16 +686,16 @@ function updatePriceStats(totalValue) {
   })))}</div>`;
 
   let concentrated = 0;
-  for (const d of data) { if (d.country_share_pct != null && d.country_share_pct > 50 && d.jobs) concentrated += d.jobs; }
+  for (const d of data) { if (d.country_share_pct != null && d.country_share_pct > 50 && d.value) concentrated += d.value; }
   document.getElementById("block4").innerHTML = `<h3>Concentrated supply</h3>
     <div class="stat-big">${formatValue(concentrated)}</div>
     <div class="stat-label">single country &gt;50% world share</div>`;
 
-  const top6 = [...data].filter(d => d.jobs).sort((a, b) => b.jobs - a.jobs).slice(0, 6);
+  const top6 = [...data].filter(d => d.value).sort((a, b) => b.value - a.value).slice(0, 6);
   document.getElementById("block5").innerHTML = `<h3>Top resources</h3><div class="hbar-chart">${renderHbars(top6.map(d => ({
     label: d.title.replace(" - "," ").replace("Natural Gas","Nat Gas").replace("Crude Oil","Crude"),
-    val: formatValue(d.jobs),
-    pct: d.jobs / top6[0].jobs * 100,
+    val: formatValue(d.value),
+    pct: d.value / top6[0].value * 100,
     color: categoryColor(d.category, 0.8),
   })))}</div>`;
 
@@ -707,8 +707,8 @@ function updatePriceStats(totalValue) {
 function updateCategoryStats(totalValue) {
   const byCat = CATEGORIES.map(cat => {
     let val = 0;
-    for (const d of data) { if (d.category === cat && d.jobs) val += d.jobs; }
-    return {cat, val, jobs: val, label: CAT_LABELS[cat], color: categoryColor(cat, 1)};
+    for (const d of data) { if (d.category === cat && d.value) val += d.value; }
+    return {cat, val, value: val, label: CAT_LABELS[cat], color: categoryColor(cat, 1)};
   }).sort((a, b) => b.val - a.val);
 
   const top = byCat[0];
@@ -720,7 +720,7 @@ function updateCategoryStats(totalValue) {
 
   const rpByCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
-    for (const d of data) { if (d.category === cat && d.rp_ratio != null && d.jobs) { wS += d.rp_ratio * d.jobs; wC += d.jobs; } }
+    for (const d of data) { if (d.category === cat && d.rp_ratio != null && d.value) { wS += d.rp_ratio * d.value; wC += d.value; } }
     return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block4").innerHTML = `<h3>R/P by category</h3><div class="hbar-chart">${renderHbars(rpByCat.filter(g => g.avg != null).map(g => ({
@@ -731,7 +731,7 @@ function updateCategoryStats(totalValue) {
 
   const riskByCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
-    for (const d of data) { if (d.category === cat && d.exposure != null && d.jobs) { wS += d.exposure * d.jobs; wC += d.jobs; } }
+    for (const d of data) { if (d.category === cat && d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
     return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block5").innerHTML = `<h3>Geo risk by category</h3><div class="hbar-chart">${renderHbars(riskByCat.filter(g => g.avg != null).map(g => ({
@@ -745,7 +745,7 @@ function updateCategoryStats(totalValue) {
 
 function updateExposureStats(totalValue) {
   let wS = 0, wC = 0;
-  for (const d of data) { if (d.exposure != null && d.jobs) { wS += d.exposure * d.jobs; wC += d.jobs; } }
+  for (const d of data) { if (d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
   const avg = wC > 0 ? wS / wC : 0;
   const scoredCount = data.filter(d => d.exposure != null).length;
   document.getElementById("block2").innerHTML = `<h3>Avg. geo risk</h3>
@@ -753,7 +753,7 @@ function updateExposureStats(totalValue) {
     <div class="stat-label">value-weighted \u00b7 ${scoredCount}/${data.length} scored</div>`;
 
   const histogram = new Array(11).fill(0);
-  for (const d of data) { if (d.exposure != null && d.jobs) histogram[Math.round(d.exposure)] += d.jobs; }
+  for (const d of data) { if (d.exposure != null && d.value) histogram[Math.round(d.exposure)] += d.value; }
   const maxH = Math.max(...histogram, 1);
   document.getElementById("block3").innerHTML = `<h3>Value by risk score</h3>
     <div class="histogram">${histogram.map((c, i) => `<div class="bar" style="height:${Math.max(2, c / maxH * 100)}%;background:${exposureColor(i, 0.7)}"></div>`).join("")}</div>
@@ -768,14 +768,14 @@ function updateExposureStats(totalValue) {
   ];
   const tiers = tierDefs.map(t => {
     let val = 0;
-    for (const d of data) { if (d.exposure != null && d.jobs && d.exposure >= t.lo && d.exposure <= t.hi) val += d.jobs; }
-    return {...t, jobs: val, color: exposureColor(t.mid, 1)};
+    for (const d of data) { if (d.exposure != null && d.value && d.exposure >= t.lo && d.exposure <= t.hi) val += d.value; }
+    return {...t, value: val, color: exposureColor(t.mid, 1)};
   });
   document.getElementById("block4").innerHTML = `<h3>Risk tiers</h3><div class="tier-bar">${renderTiers(tiers, totalValue)}</div>`;
 
   const riskByCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
-    for (const d of data) { if (d.category === cat && d.exposure != null && d.jobs) { wS += d.exposure * d.jobs; wC += d.jobs; } }
+    for (const d of data) { if (d.category === cat && d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
     return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block5").innerHTML = `<h3>Risk by category</h3><div class="hbar-chart">${renderHbars(riskByCat.filter(g => g.avg != null).map(g => ({
@@ -783,7 +783,7 @@ function updateExposureStats(totalValue) {
   })))}</div>`;
 
   let highRisk = 0;
-  for (const d of data) { if (d.exposure != null && d.exposure >= 7 && d.jobs) highRisk += d.jobs; }
+  for (const d of data) { if (d.exposure != null && d.exposure >= 7 && d.value) highRisk += d.value; }
   document.getElementById("block6").innerHTML = `<h3>High-risk value</h3>
     <div class="stat-big" style="color:${exposureColor(8, 1)}">${formatValue(highRisk)}</div>
     <div class="stat-label">annual, resources scoring 7+</div>`;

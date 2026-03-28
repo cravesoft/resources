@@ -1,77 +1,79 @@
-# US Job Market Visualizer
+# Global Resource Tracker
 
-A research tool for visually exploring Bureau of Labor Statistics [Occupational Outlook Handbook](https://www.bls.gov/ooh/) data. This is not a report, a paper, or a serious economic publication — it is a development tool for exploring BLS data visually.
-
-**Live demo: [karpathy.ai/jobs](https://karpathy.ai/jobs/)**
+An interactive treemap visualizing **99 non-renewable resource × country pairs** — fossil fuels, critical minerals, rare earths, industrial metals, and precious metals. Each rectangle's **area** is proportional to annual production value in USD. **Color** shows the selected metric: reserve-to-production ratio, commodity price, resource category, or LLM-scored geopolitical risk.
 
 ## What's here
 
-The BLS OOH covers **342 occupations** spanning every sector of the US economy, with detailed data on job duties, work environment, education requirements, pay, and employment projections. We scraped all of it and built an interactive treemap visualization where each rectangle's **area** is proportional to total employment and **color** shows the selected metric — toggle between BLS projected growth outlook, median pay, education requirements, and AI exposure.
+The visualization covers major producers of 17 commodities across 6 categories: fossil fuels (crude oil, natural gas, coal), nuclear (uranium), critical minerals (lithium, cobalt, nickel, graphite, manganese), rare earth elements, industrial metals (copper, iron ore, bauxite, zinc), and precious metals (gold, silver, platinum). Data as of 2023–2024.
 
 ## LLM-powered coloring
 
-The repo includes scrapers, parsers, and a pipeline for writing custom LLM prompts to score and color occupations by any criteria. You write a prompt, the LLM scores each occupation, and the treemap colors accordingly. The "Digital AI Exposure" layer is one example — it estimates how much current AI (which is primarily digital) will reshape each occupation. But you could write a different prompt for any question — e.g. exposure to humanoid robotics, offshoring risk, climate impact — and re-run the pipeline to get a different coloring. See `score.py` for the prompt and scoring pipeline.
+The repo includes a data pipeline and LLM scoring stage. The "Geopolitical Risk" layer rates each resource–country pair on a 0–10 scale: how likely is supply to be disrupted, weaponized, or withheld in ways that harm importing economies? The score considers producer stability, market concentration, availability of alternatives, and historical precedent of export weaponization. See `score.py` for the prompt and scoring pipeline.
 
-**What "AI Exposure" is NOT:**
-- It does **not** predict that a job will disappear. Software developers score 9/10 because AI is transforming their work — but demand for software could easily *grow* as each developer becomes more productive.
-- It does **not** account for demand elasticity, latent demand, regulatory barriers, or social preferences for human workers.
-- The scores are rough LLM estimates (Gemini Flash via OpenRouter), not rigorous predictions. Many high-exposure jobs will be reshaped, not replaced.
+**What "Geopolitical Risk" is NOT:**
+- It does **not** measure price volatility or investment risk.
+- It does **not** account for futures contracts, strategic reserves, or demand-side substitution.
+- The scores are LLM estimates (Gemini 2.5 Flash), calibrated to publicly available information as of 2024–2025.
+
+## Data sources
+
+| Commodity | Source |
+|-----------|--------|
+| Crude oil, natural gas, coal | EIA International Energy Statistics 2024 |
+| Oil, gas, coal reserves | BP Statistical Review 2024 |
+| Uranium production & reserves | World Nuclear Association 2024; IAEA Red Book 2023 |
+| All minerals & metals | USGS Mineral Commodity Summaries 2025 |
+| Commodity prices | World Bank Pink Sheet (March 2026) |
 
 ## Data pipeline
 
-1. **Scrape** (`scrape.py`) — Playwright (non-headless, BLS blocks bots) downloads raw HTML for all 342 occupation pages into `html/`.
-2. **Parse** (`parse_detail.py`, `process.py`) — BeautifulSoup converts raw HTML into clean Markdown files in `pages/`.
-3. **Tabulate** (`make_csv.py`) — Extracts structured fields (pay, education, job count, growth outlook, SOC code) into `occupations.csv`.
-4. **Score** (`score.py`) — Sends each occupation's Markdown description to an LLM with a scoring rubric. Each occupation gets an AI Exposure score from 0-10 with a rationale. Results saved to `scores.json`. Fork this to write your own prompts.
-5. **Build site data** (`build_site_data.py`) — Merges CSV stats and AI exposure scores into a compact `site/data.json` for the frontend.
-6. **Website** (`site/index.html`) — Interactive treemap visualization with four color layers: BLS Outlook, Median Pay, Education, and Digital AI Exposure.
+1. **Fetch** (`fetch.py`) — Downloads raw data from EIA API, USGS ScienceBase, and World Bank into `raw/`.
+2. **Parse** (`parse_resources.py`) — Converts raw data into structured Markdown descriptions in `pages/` and exposes calculation helpers.
+3. **Tabulate** (`make_csv.py`) — Builds `resources.csv` with production, reserves, R/P ratio, price, and production value for all 99 pairs.
+4. **Score** (`score.py`) — Sends each resource's Markdown description to an LLM with a geopolitical risk rubric. Results saved to `resource_scores.json`. Resume-safe: skips already-scored entries.
+5. **Build site data** (`build_site_data.py`) — Merges CSV stats and scores into `site/data.json`.
+6. **Website** (`site/index.html`) — Interactive treemap with four color layers: R/P Ratio, Price, Category, and Geopolitical Risk.
 
 ## Key files
 
 | File | Description |
 |------|-------------|
-| `occupations.json` | Master list of 342 occupations with title, URL, category, slug |
-| `occupations.csv` | Summary stats: pay, education, job count, growth projections |
-| `scores.json` | AI exposure scores (0-10) with rationales for all 342 occupations |
-| `prompt.md` | All data in a single file, designed to be pasted into an LLM for analysis |
-| `html/` | Raw HTML pages from BLS (source of truth, ~40MB) |
-| `pages/` | Clean Markdown versions of each occupation page |
+| `resources.json` | Master list of 99 resource–country pairs (title, commodity, country, iso3, category, slug) |
+| `resources.csv` | Summary stats: production, reserves, R/P ratio, price, production value, world share |
+| `resource_scores.json` | Geopolitical risk scores (0–10) with rationales |
+| `pages/` | Markdown descriptions used as LLM context for scoring |
 | `site/` | Static website (treemap visualization) |
-
-## LLM prompt
-
-[`prompt.md`](prompt.md) packages all the data — aggregate statistics, tier breakdowns, exposure by pay/education, BLS growth projections, and all 342 occupations with their scores and rationales — into a single file (~45K tokens) designed to be pasted into an LLM. This lets you have a data-grounded conversation about AI's impact on the job market without needing to run any code. Regenerate it with `uv run python make_prompt.py`.
 
 ## Setup
 
 ```
 uv sync
-uv run playwright install chromium
 ```
 
-Requires an OpenRouter API key in `.env`:
+Requires API keys in `.env`:
 ```
-OPENROUTER_API_KEY=your_key_here
+EIA_API_KEY=your_key_here       # free at https://www.eia.gov/opendata/register.php
+GEMINI_API_KEY=your_key_here    # free at https://aistudio.google.com/apikey
 ```
 
 ## Usage
 
 ```bash
-# Scrape BLS pages (only needed once, results are cached in html/)
-uv run python scrape.py
+# Download raw data (EIA, USGS, World Bank)
+uv run python fetch.py
 
-# Generate Markdown from HTML
-uv run python process.py
+# Generate Markdown descriptions in pages/
+uv run python parse_resources.py
 
-# Generate CSV summary
+# Build resources.csv
 uv run python make_csv.py
 
-# Score AI exposure (uses OpenRouter API)
-uv run python score.py
+# Score geopolitical risk (Google AI Studio, resume-safe)
+uv run python score.py --delay 8
 
-# Build website data
+# Build site/data.json
 uv run python build_site_data.py
 
-# Serve the site locally
+# Serve locally
 cd site && python -m http.server 8000
 ```

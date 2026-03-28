@@ -45,7 +45,7 @@ def main():
             "country":            row["country"],
             "iso3":               row["iso3"],
             # Treemap area — production value in USD billions
-            "jobs":               _float(row["production_value_bn_usd"]),
+            "value":              _float(row["production_value_bn_usd"]),
             # Numeric metrics
             "rp_ratio":           _float(row["rp_ratio"]),
             "depletion_year":     _int(row["depletion_year_est"]),
@@ -66,7 +66,7 @@ def main():
         json.dump(data, f)
 
     scored = sum(1 for d in data if d["exposure"] is not None)
-    total_value = sum(d["jobs"] for d in data if d["jobs"])
+    total_value = sum(d["value"] for d in data if d["value"])
     print(f"Wrote {len(data)} resources to site/data.json")
     print(f"  Scored: {scored}/{len(data)}")
     print(f"  Total production value: ${total_value:.1f}B")
