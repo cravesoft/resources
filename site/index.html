@@ -246,6 +246,7 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
         <button data-mode="rp" class="active">R/P Ratio</button>
         <button data-mode="price">Price</button>
         <button data-mode="category">Category</button>
+        <button data-mode="country">Country</button>
         <button data-mode="exposure">Geopolitical Risk</button>
       </div>
     </div>
@@ -363,10 +364,22 @@ function exposureColor(v, a) {
   return greenRedCSS(v / 10, a);
 }
 
+// Country colors: golden-angle hue spacing, built from data on load
+let COUNTRY_HUES = {};
+function buildCountryColors(data) {
+  const countries = [...new Set(data.map(d => d.country))].sort();
+  countries.forEach((c, i) => { COUNTRY_HUES[c] = (i * 137.508) % 360; });
+}
+function countryColor(country, a) {
+  if (!country || COUNTRY_HUES[country] == null) return `rgba(128,128,128,${a})`;
+  return `hsla(${COUNTRY_HUES[country]},65%,55%,${a})`;
+}
+
 function tileColorCSS(d, alpha) {
   if (colorMode === "rp")       return rpColor(d.rp_ratio, alpha);
   if (colorMode === "price")    return priceColor(d.pay, alpha);
   if (colorMode === "category") return categoryColor(d.category, alpha);
+  if (colorMode === "country")  return countryColor(d.country, alpha);
   if (colorMode === "exposure") return exposureColor(d.exposure, alpha);
   return `rgba(128,128,128,${alpha})`;
 }
@@ -388,6 +401,9 @@ function tileSubInfo(r) {
   }
   if (colorMode === "category") {
     return (CAT_LABELS[r.category] || r.category) + " \u00b7 " + val;
+  }
+  if (colorMode === "country") {
+    return r.country + " \u00b7 " + val;
   }
   if (colorMode === "exposure") {
     return (r.exposure != null ? r.exposure + "/10 risk" : "unscored") + " \u00b7 " + val;
@@ -545,6 +561,10 @@ function tooltipHighlight(d) {
     const color = categoryColor(d.category, 1);
     return `<span style="color:${color};font-weight:600;">${CAT_LABELS[d.category] || d.category}</span>`;
   }
+  if (colorMode === "country") {
+    const color = countryColor(d.country, 1);
+    return `<span style="color:${color};font-weight:600;">${d.country}</span>`;
+  }
   if (colorMode === "exposure") {
     const v = d.exposure;
     if (v == null) return `<span style="color:var(--fg2);">Geopolitical Risk: not yet scored</span>`;
@@ -609,6 +629,7 @@ function updateStats() {
   if (colorMode === "rp")            updateRpStats(totalValue);
   else if (colorMode === "price")    updatePriceStats(totalValue);
   else if (colorMode === "category") updateCategoryStats(totalValue);
+  else if (colorMode === "country")  updateCountryStats(totalValue);
   else                               updateExposureStats(totalValue);
 }
 
@@ -743,6 +764,50 @@ function updateCategoryStats(totalValue) {
   document.getElementById("block8").innerHTML = "";
 }
 
+function updateCountryStats(totalValue) {
+  const byCountry = {};
+  for (const d of data) {
+    if (!byCountry[d.country]) byCountry[d.country] = {value: 0, risk: 0, riskCount: 0};
+    byCountry[d.country].value += d.value || 0;
+    if (d.exposure != null) { byCountry[d.country].risk += d.exposure; byCountry[d.country].riskCount++; }
+  }
+  const countries = Object.entries(byCountry)
+    .map(([c, v]) => ({country: c, value: v.value, avgRisk: v.riskCount > 0 ? v.risk / v.riskCount : null}))
+    .sort((a, b) => b.value - a.value);
+
+  document.getElementById("block2").innerHTML = `<h3>Countries</h3>
+    <div class="stat-big">${countries.length}</div>
+    <div class="stat-label">producing nations</div>`;
+
+  // Top 8 by value
+  const top8 = countries.slice(0, 8);
+  document.getElementById("block3").innerHTML = `<h3>Top producers</h3><div class="hbar-chart">${renderHbars(top8.map(g => ({
+    label: g.country.replace("United States","USA").replace("United Arab Emirates","UAE").replace("Saudi Arabia","S. Arabia").replace("Dem. Rep. Congo","DRC").replace("New Caledonia","N. Caledonia"),
+    val: formatValue(g.value),
+    pct: g.value / top8[0].value * 100,
+    color: countryColor(g.country, 0.9),
+  })))}</div>`;
+
+  // Value concentration: top 3 share
+  const top3val = countries.slice(0, 3).reduce((s, c) => s + c.value, 0);
+  document.getElementById("block4").innerHTML = `<h3>Top 3 concentration</h3>
+    <div class="stat-big">${(top3val / totalValue * 100).toFixed(0)}%</div>
+    <div class="stat-label">of total value: ${countries.slice(0,3).map(c=>c.country.replace("United States","USA").replace("Saudi Arabia","S. Arabia")).join(", ")}</div>`;
+
+  // Avg geopolitical risk by country (scored only, top 6 riskiest)
+  const riskiest = countries.filter(c => c.avgRisk != null).sort((a, b) => b.avgRisk - a.avgRisk).slice(0, 6);
+  document.getElementById("block5").innerHTML = `<h3>Riskiest producers</h3><div class="hbar-chart">${renderHbars(riskiest.map(g => ({
+    label: g.country.replace("United States","USA").replace("Saudi Arabia","S. Arabia").replace("Dem. Rep. Congo","DRC"),
+    val: g.avgRisk.toFixed(1),
+    pct: g.avgRisk / 10 * 100,
+    color: exposureColor(g.avgRisk, 0.8),
+  })))}</div>`;
+
+  document.getElementById("block6").innerHTML = "";
+  document.getElementById("block7").innerHTML = "";
+  document.getElementById("block8").innerHTML = "";
+}
+
 function updateExposureStats(totalValue) {
   let wS = 0, wC = 0;
   for (const d of data) { if (d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
@@ -809,6 +874,7 @@ const LEGEND_CONFIG = {
   rp:       { low: "Depleting", high: "Long reserve" },
   price:    { low: "Cheap", high: "Expensive" },
   category: { low: "Fossil Fuels", high: "Precious Metals" },
+  country:  { low: "", high: "" },
   exposure: { low: "Low risk", high: "High risk" },
 };
 
@@ -821,6 +887,12 @@ function drawGradientLegend() {
       gctx.fillStyle = categoryColor(cat, 1);
       gctx.fillRect(i * sw, 0, sw, 8);
     });
+  } else if (colorMode === "country") {
+    // Draw rainbow hue gradient
+    for (let x = 0; x < 80; x++) {
+      gctx.fillStyle = `hsl(${x / 79 * 360},65%,55%)`;
+      gctx.fillRect(x, 0, 1, 8);
+    }
   } else {
     for (let x = 0; x < 80; x++) {
       const t = x / 79;
@@ -855,6 +927,7 @@ fetch("data.json")
   .then(r => r.json())
   .then(d => {
     data = d;
+    buildCountryColors(data);
     updateStats();
     drawGradientLegend();
     resize();
