@@ -7,6 +7,7 @@
   { "title": "Coal - Russia",            "commodity": "Coal",          "country": "Russia",              "iso3": "RUS", "category": "fossil-fuels",        "slug": "coal-russia" },
   { "title": "Coal - South Africa",      "commodity": "Coal",          "country": "South Africa",        "iso3": "ZAF", "category": "fossil-fuels",        "slug": "coal-south-africa" },
   { "title": "Coal - Vietnam",           "commodity": "Coal",          "country": "Vietnam",             "iso3": "VNM", "category": "fossil-fuels",        "slug": "coal-vietnam" },
+  { "title": "Coal - Poland",            "commodity": "Coal",          "country": "Poland",              "iso3": "POL", "category": "fossil-fuels",        "slug": "coal-poland" },
 
   { "title": "Crude Oil - USA",          "commodity": "Crude Oil",     "country": "United States",       "iso3": "USA", "category": "fossil-fuels",        "slug": "crude-oil-usa" },
   { "title": "Crude Oil - Saudi Arabia", "commodity": "Crude Oil",     "country": "Saudi Arabia",        "iso3": "SAU", "category": "fossil-fuels",        "slug": "crude-oil-saudi-arabia" },
@@ -19,6 +20,9 @@
   { "title": "Crude Oil - Brazil",       "commodity": "Crude Oil",     "country": "Brazil",              "iso3": "BRA", "category": "fossil-fuels",        "slug": "crude-oil-brazil" },
   { "title": "Crude Oil - Venezuela",    "commodity": "Crude Oil",     "country": "Venezuela",           "iso3": "VEN", "category": "fossil-fuels",        "slug": "crude-oil-venezuela" },
   { "title": "Crude Oil - Nigeria",      "commodity": "Crude Oil",     "country": "Nigeria",             "iso3": "NGA", "category": "fossil-fuels",        "slug": "crude-oil-nigeria" },
+  { "title": "Crude Oil - China",        "commodity": "Crude Oil",     "country": "China",               "iso3": "CHN", "category": "fossil-fuels",        "slug": "crude-oil-china" },
+  { "title": "Crude Oil - Kazakhstan",   "commodity": "Crude Oil",     "country": "Kazakhstan",          "iso3": "KAZ", "category": "fossil-fuels",        "slug": "crude-oil-kazakhstan" },
+  { "title": "Crude Oil - Mexico",       "commodity": "Crude Oil",     "country": "Mexico",              "iso3": "MEX", "category": "fossil-fuels",        "slug": "crude-oil-mexico" },
 
   { "title": "Natural Gas - USA",        "commodity": "Natural Gas",   "country": "United States",       "iso3": "USA", "category": "fossil-fuels",        "slug": "natural-gas-usa" },
   { "title": "Natural Gas - Russia",     "commodity": "Natural Gas",   "country": "Russia",              "iso3": "RUS", "category": "fossil-fuels",        "slug": "natural-gas-russia" },
@@ -84,6 +88,7 @@
   { "title": "Copper - Russia",          "commodity": "Copper",        "country": "Russia",              "iso3": "RUS", "category": "metals-industrial",   "slug": "copper-russia" },
   { "title": "Copper - Zambia",          "commodity": "Copper",        "country": "Zambia",              "iso3": "ZMB", "category": "metals-industrial",   "slug": "copper-zambia" },
   { "title": "Copper - Mexico",          "commodity": "Copper",        "country": "Mexico",              "iso3": "MEX", "category": "metals-industrial",   "slug": "copper-mexico" },
+  { "title": "Copper - Australia",       "commodity": "Copper",        "country": "Australia",           "iso3": "AUS", "category": "metals-industrial",   "slug": "copper-australia" },
 
   { "title": "Iron Ore - Australia",     "commodity": "Iron Ore",      "country": "Australia",           "iso3": "AUS", "category": "metals-industrial",   "slug": "iron-ore-australia" },
   { "title": "Iron Ore - Brazil",        "commodity": "Iron Ore",      "country": "Brazil",              "iso3": "BRA", "category": "metals-industrial",   "slug": "iron-ore-brazil" },
@@ -97,6 +102,7 @@
   { "title": "Bauxite - Brazil",         "commodity": "Bauxite",       "country": "Brazil",              "iso3": "BRA", "category": "metals-industrial",   "slug": "bauxite-brazil" },
   { "title": "Bauxite - India",          "commodity": "Bauxite",       "country": "India",               "iso3": "IND", "category": "metals-industrial",   "slug": "bauxite-india" },
   { "title": "Bauxite - Jamaica",        "commodity": "Bauxite",       "country": "Jamaica",             "iso3": "JAM", "category": "metals-industrial",   "slug": "bauxite-jamaica" },
+  { "title": "Bauxite - Indonesia",      "commodity": "Bauxite",       "country": "Indonesia",           "iso3": "IDN", "category": "metals-industrial",   "slug": "bauxite-indonesia" },
 
   { "title": "Zinc - China",             "commodity": "Zinc",          "country": "China",               "iso3": "CHN", "category": "metals-industrial",   "slug": "zinc-china" },
   { "title": "Zinc - Peru",              "commodity": "Zinc",          "country": "Peru",                "iso3": "PER", "category": "metals-industrial",   "slug": "zinc-peru" },
@@ -119,6 +125,8 @@
   { "title": "Silver - Russia",          "commodity": "Silver",        "country": "Russia",              "iso3": "RUS", "category": "precious-metals",     "slug": "silver-russia" },
   { "title": "Silver - Australia",       "commodity": "Silver",        "country": "Australia",           "iso3": "AUS", "category": "precious-metals",     "slug": "silver-australia" },
   { "title": "Silver - Chile",           "commodity": "Silver",        "country": "Chile",               "iso3": "CHL", "category": "precious-metals",     "slug": "silver-chile" },
+  { "title": "Silver - Poland",          "commodity": "Silver",        "country": "Poland",              "iso3": "POL", "category": "precious-metals",     "slug": "silver-poland" },
+  { "title": "Silver - Bolivia",         "commodity": "Silver",        "country": "Bolivia",             "iso3": "BOL", "category": "precious-metals",     "slug": "silver-bolivia" },
 
   { "title": "Platinum - South Africa",  "commodity": "Platinum",      "country": "South Africa",        "iso3": "ZAF", "category": "precious-metals",     "slug": "platinum-south-africa" },
   { "title": "Platinum - Russia",        "commodity": "Platinum",      "country": "Russia",              "iso3": "RUS", "category": "precious-metals",     "slug": "platinum-russia" },
