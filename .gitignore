@@ -21,3 +21,6 @@ embeddings.json
 
 # macOS
 .DS_Store
+
+# Non-renewable resources pipeline
+raw/
