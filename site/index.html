@@ -346,9 +346,29 @@ function rpColor(v, a) {
 }
 
 // Price per unit: log scale, expensive=red
+// Normalize any commodity price to $/metric ton for cross-commodity comparison.
+// Conversion factors:
+//   $/bbl     → $/t  : ×7.33   (crude oil, ~7.33 bbl per tonne)
+//   $/mmbtu   → $/t  : ×52.37  (natural gas, LNG equivalent)
+//   $/troy oz → $/t  : ×32150.75
+//   dmtu      → $/t  : ×44     (manganese ore, ≈44% Mn grade)
+//   lb U₃O₈   → $/t  : ×2204.62
+//   t / t(*) → already $/t
+function normalizedPriceTon(d) {
+  if (d.pay == null) return null;
+  const u = d.price_unit || '';
+  if (u === '$/bbl')     return d.pay * 7.33;
+  if (u === '$/mmbtu')   return d.pay * 52.37;
+  if (u === '$/troy oz') return d.pay * 32150.75;
+  if (u === 'dmtu')      return d.pay * 44;
+  if (u.startsWith('lb')) return d.pay * 2204.62;
+  return d.pay;
+}
+
+// Color by $/t normalized price. Log scale: $100/t → green, $10M/t → red.
 function priceColor(v, a) {
   if (v == null) return `rgba(128,128,128,${a})`;
-  const t = Math.max(0, Math.min(1, (Math.log10(Math.max(0.01, v)) + 2) / 7));
+  const t = Math.max(0, Math.min(1, (Math.log10(Math.max(1, v)) - 2) / 6));
   return greenRedCSS(t, a);
 }
 
@@ -377,7 +397,7 @@ function countryColor(country, a) {
 
 function tileColorCSS(d, alpha) {
   if (colorMode === "rp")       return rpColor(d.rp_ratio, alpha);
-  if (colorMode === "price")    return priceColor(d.pay, alpha);
+  if (colorMode === "price")    return priceColor(normalizedPriceTon(d), alpha);
   if (colorMode === "category") return categoryColor(d.category, alpha);
   if (colorMode === "country")  return countryColor(d.country, alpha);
   if (colorMode === "exposure") return exposureColor(d.exposure, alpha);
@@ -397,7 +417,8 @@ function tileSubInfo(r) {
     return (r.rp_ratio != null ? r.rp_ratio.toFixed(0) + "yr R/P" : "") + " \u00b7 " + val;
   }
   if (colorMode === "price") {
-    return (r.pay != null ? "$" + r.pay.toLocaleString() + "/" + (r.price_unit || "unit") : "") + " \u00b7 " + val;
+    const norm = normalizedPriceTon(r);
+    return (norm != null ? "$" + Math.round(norm).toLocaleString() + "/t" : "") + " \u00b7 " + val;
   }
   if (colorMode === "category") {
     return (CAT_LABELS[r.category] || r.category) + " \u00b7 " + val;
@@ -552,10 +573,11 @@ function tooltipHighlight(d) {
       `<div style="height:100%;width:${pct}%;background:${color};border-radius:2px;"></div></div>`;
   }
   if (colorMode === "price") {
-    const v = d.pay;
-    if (v == null) return "";
-    const color = priceColor(v, 1);
-    return `<span style="color:${color};font-weight:600;">Price: $${v.toLocaleString()} / ${d.price_unit || "unit"}</span>`;
+    if (d.pay == null) return "";
+    const norm = normalizedPriceTon(d);
+    const color = priceColor(norm, 1);
+    const normStr = norm != null ? ` <span style="color:var(--fg2);">= $${Math.round(norm).toLocaleString()}/t</span>` : '';
+    return `<span style="color:${color};font-weight:600;">Price: $${d.pay.toLocaleString()} / ${d.price_unit || "unit"}</span>${normStr}`;
   }
   if (colorMode === "category") {
     const color = categoryColor(d.category, 1);
