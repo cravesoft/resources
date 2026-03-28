@@ -2,6 +2,8 @@
 
 An interactive treemap visualizing **99 non-renewable resource × country pairs** — fossil fuels, critical minerals, rare earths, industrial metals, and precious metals. Each rectangle's **area** is proportional to annual production value in USD. **Color** shows the selected metric: reserve-to-production ratio, commodity price, resource category, or LLM-scored geopolitical risk.
 
+This repository is based on a fork of https://github.com/karpathy/jobs by Andrej Karpathy.
+
 ## What's here
 
 The visualization covers major producers of 17 commodities across 6 categories: fossil fuels (crude oil, natural gas, coal), nuclear (uranium), critical minerals (lithium, cobalt, nickel, graphite, manganese), rare earth elements, industrial metals (copper, iron ore, bauxite, zinc), and precious metals (gold, silver, platinum). Data as of 2023–2024.

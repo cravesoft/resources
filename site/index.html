@@ -120,7 +120,7 @@ body {
 .tier-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
 .tier-color { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
 .tier-name { flex: 1; color: var(--fg2); white-space: nowrap; }
-.tier-jobs { text-align: right; white-space: nowrap; }
+.tier-resources { text-align: right; white-space: nowrap; }
 .tier-pct { text-align: right; width: 30px; color: var(--fg2); font-size: 11px; }
 
 .histogram { display: flex; align-items: flex-end; gap: 2px; height: 54px; }
@@ -209,9 +209,9 @@ canvas#canvas {
 <div id="wrapper">
 <div id="header">
   <div class="intro">
-    <h1>Global Resource Tracker <a href="https://github.com/karpathy/jobs">GitHub</a></h1>
+    <h1>Global Resource Tracker <a href="https://github.com/cravesoft/resources">GitHub</a></h1>
     <p>A research tool visualizing <b>99 non-renewable resource &times; country pairs</b> spanning fossil fuels, critical minerals, rare earths, industrial metals, and precious metals. Each rectangle's <b>area</b> is proportional to annual production value in USD. <b>Color</b> shows the selected metric &mdash; toggle between reserve-to-production ratio, commodity price, resource category, and LLM-scored geopolitical risk. Data sources: EIA International Energy Statistics, USGS Mineral Commodity Summaries 2025, World Bank Pink Sheet, BP Statistical Review 2024.</p>
-    <p><b>LLM-powered coloring:</b> The <a href="https://github.com/karpathy/jobs">source code</a> includes a full data pipeline and LLM scoring stage. The "Geopolitical Risk" layer rates each resource&ndash;country pair on a 0&ndash;10 scale: how likely is supply to be disrupted, weaponized, or withheld in ways that harm importing economies? Factors include producer stability, market concentration, availability of substitutes, and historical precedent of export weaponization.</p>
+    <p><b>LLM-powered coloring:</b> The <a href="https://github.com/cravesoft/resources">source code</a> includes a full data pipeline and LLM scoring stage. The "Geopolitical Risk" layer rates each resource&ndash;country pair on a 0&ndash;10 scale: how likely is supply to be disrupted, weaponized, or withheld in ways that harm importing economies? Factors include producer stability, market concentration, availability of substitutes, and historical precedent of export weaponization.</p>
     <details>
       <summary>View the Geopolitical Risk scoring prompt</summary>
       <div class="prompt-box">You are an expert analyst in critical minerals, energy security, and geopolitical risk. You will be given a description of a non-renewable natural resource produced in a specific country.
@@ -587,7 +587,7 @@ function renderTiers(tiers, totalValue) {
   return tiers.map(t => `<div class="tier-row">
     <div class="tier-color" style="background:${t.color}"></div>
     <span class="tier-name">${t.label}</span>
-    <span class="tier-jobs">${formatValue(t.value)}</span>
+    <span class="tier-resources">${formatValue(t.value)}</span>
     <span class="tier-pct">${totalValue > 0 ? (t.value / totalValue * 100).toFixed(0) : 0}%</span>
   </div>`).join("");
 }

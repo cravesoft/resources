@@ -417,7 +417,7 @@ wheels = [
 ]
 
 [[package]]
-name = "jobs"
+name = "resources"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
