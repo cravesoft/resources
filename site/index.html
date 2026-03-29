@@ -270,6 +270,14 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
 
   <div class="controls-row">
     <div class="stat-section">
+      <h3>Group by</h3>
+      <div class="color-toggle" id="groupToggle">
+        <button data-group="category" class="active">Category</button>
+        <button data-group="commodity">Commodity</button>
+        <button data-group="country">Country</button>
+      </div>
+    </div>
+    <div class="stat-section">
       <h3>Layer</h3>
       <div class="color-toggle" id="colorToggle">
         <button data-mode="rp" class="active">R/P Ratio</button>
@@ -321,6 +329,7 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
 
 let colorMode = "rp";
 let colorblindMode = false;
+let groupMode = "category";
 
 function boostContrast(t) {
   const c = (t - 0.5) * 2;
@@ -633,17 +642,18 @@ function layout() {
   canvas.width = w * dpr; canvas.height = h * dpr;
   canvas.style.width = w + "px"; canvas.style.height = h + "px";
   const tx = MARGIN, ty = MARGIN, tw = w - MARGIN * 2, th = h - MARGIN * 2;
-  const byCategory = {};
-  for (const d of data) { if (!byCategory[d.category]) byCategory[d.category] = []; byCategory[d.category].push(d); }
-  const categories = Object.keys(byCategory).map(cat => ({
-    cat, items: byCategory[cat].sort((a, b) => (b.value || 0) - (a.value || 0)),
-    value: byCategory[cat].reduce((s, d) => s + (d.value || 1), 0),
+  const groupKey = groupMode === "commodity" ? "commodity" : groupMode === "country" ? "country" : "category";
+  const byGroup = {};
+  for (const d of data) { const k = d[groupKey]; if (!byGroup[k]) byGroup[k] = []; byGroup[k].push(d); }
+  const groups = Object.keys(byGroup).map(k => ({
+    items: byGroup[k].sort((a, b) => (b.value || 0) - (a.value || 0)),
+    value: byGroup[k].reduce((s, d) => s + (d.value || 1), 0),
   })).sort((a, b) => b.value - a.value);
-  const catRects = squarify(categories, tx, ty, tw, th);
+  const groupRects = squarify(groups, tx, ty, tw, th);
   rects = [];
-  for (const cr of catRects) {
-    const items = cr.items.map(d => ({ ...d, value: d.value || 1 }));
-    const innerRects = squarify(items, cr.rx + GAP, cr.ry + GAP, cr.rw - GAP * 2, cr.rh - GAP * 2);
+  for (const gr of groupRects) {
+    const items = gr.items.map(d => ({ ...d, value: d.value || 1 }));
+    const innerRects = squarify(items, gr.rx + GAP, gr.ry + GAP, gr.rw - GAP * 2, gr.rh - GAP * 2);
     for (const ir of innerRects) rects.push(ir);
   }
 }
@@ -1127,6 +1137,17 @@ document.getElementById("cbToggle").addEventListener("click", () => {
   updateStats();
   drawGradientLegend();
   draw();
+});
+
+// ── Group toggle ─────────────────────────────────────────────────────
+
+document.getElementById("groupToggle").addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn || !btn.dataset.group) return;
+  groupMode = btn.dataset.group;
+  document.querySelectorAll("#groupToggle button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  requestAnimationFrame(resize);
 });
 
 // ── Layer toggle ─────────────────────────────────────────────────────
