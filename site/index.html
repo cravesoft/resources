@@ -979,7 +979,7 @@ function updateContinentStats(totalValue) {
   const conts = CONTINENTS.map(c => ({
     cont: c, value: byCont[c] ? byCont[c].value : 0,
     avgRisk: byCont[c] && byCont[c].riskCount > 0 ? byCont[c].risk / byCont[c].riskCount : null,
-    label: c, color: (() => { const rgb = CONTINENT_COLORS[c]; return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`; })(),
+    label: c, color: (() => { const rgb = (colorblindMode ? CONTINENT_COLORS_CB : CONTINENT_COLORS)[c]; return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`; })(),
   })).sort((a, b) => b.value - a.value);
 
   const top = conts[0];
@@ -1124,6 +1124,7 @@ function drawGradientLegend() {
 document.getElementById("cbToggle").addEventListener("click", () => {
   colorblindMode = !colorblindMode;
   document.getElementById("cbToggle").classList.toggle("active", colorblindMode);
+  updateStats();
   drawGradientLegend();
   draw();
 });
