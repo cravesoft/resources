@@ -1,6 +1,6 @@
 # Global Resource Tracker
 
-An interactive treemap visualizing **99 non-renewable resource × country pairs** — fossil fuels, critical minerals, rare earths, industrial metals, and precious metals. Each rectangle's **area** is proportional to annual production value in USD. **Color** shows the selected metric: reserve-to-production ratio, commodity price, resource category, or LLM-scored geopolitical risk.
+An interactive treemap visualizing **117 non-renewable resource × country pairs** — fossil fuels, critical minerals, rare earths, industrial metals, and precious metals. Each rectangle's **area** is proportional to annual production value in USD. **Color** shows the selected metric: reserve-to-production ratio, commodity price, resource category, or LLM-scored geopolitical risk.
 
 This repository is based on a fork of https://github.com/karpathy/jobs by Andrej Karpathy.
 
@@ -31,7 +31,7 @@ The repo includes a data pipeline and LLM scoring stage. The "Geopolitical Risk"
 
 1. **Fetch** (`fetch.py`) — Downloads raw data from EIA API, USGS ScienceBase, and World Bank into `raw/`.
 2. **Parse** (`parse_resources.py`) — Converts raw data into structured Markdown descriptions in `pages/` and exposes calculation helpers.
-3. **Tabulate** (`make_csv.py`) — Builds `resources.csv` with production, reserves, R/P ratio, price, and production value for all 99 pairs.
+3. **Tabulate** (`make_csv.py`) — Builds `resources.csv` with production, reserves, R/P ratio, price, and production value for all 117 pairs.
 4. **Score** (`score.py`) — Sends each resource's Markdown description to an LLM with a geopolitical risk rubric. Results saved to `resource_scores.json`. Resume-safe: skips already-scored entries.
 5. **Build site data** (`build_site_data.py`) — Merges CSV stats and scores into `site/data.json`.
 6. **Website** (`site/index.html`) — Interactive treemap with four color layers: R/P Ratio, Price, Category, and Geopolitical Risk.
@@ -40,7 +40,7 @@ The repo includes a data pipeline and LLM scoring stage. The "Geopolitical Risk"
 
 | File | Description |
 |------|-------------|
-| `resources.json` | Master list of 99 resource–country pairs (title, commodity, country, iso3, category, slug) |
+| `resources.json` | Master list of 117 resource–country pairs (title, commodity, country, iso3, category, slug) |
 | `resources.csv` | Summary stats: production, reserves, R/P ratio, price, production value, world share |
 | `resource_scores.json` | Geopolitical risk scores (0–10) with rationales |
 | `pages/` | Markdown descriptions used as LLM context for scoring |

@@ -195,7 +195,7 @@ def build_row(resource, eia, usgs_rows, wb_prices):
 
     row["rp_ratio"] = _fmt(rp, 1)
     if rp is not None:
-        row["depletion_year_est"] = str(2024 + int(rp))
+        row["depletion_year_est"] = str(2026 + int(rp))
 
     if price_info:
         row["price_usd_per_unit"] = _fmt(price_info["price"], 2)
