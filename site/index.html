@@ -830,7 +830,7 @@ function updateRpStats(totalValue) {
   const byCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
     for (const d of data) { if (d.category === cat && d.rp_ratio != null && d.value) { wS += d.rp_ratio * d.value; wC += d.value; } }
-    return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ",""), avg: wC > 0 ? wS / wC : null};
+    return {label: CAT_LABELS[cat].replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block5").innerHTML = `<h3>R/P by category</h3><div class="hbar-chart">${renderHbars(byCat.filter(g => g.avg != null).map(g => ({
     label: g.label, val: g.avg.toFixed(0) + "yr",
@@ -860,7 +860,7 @@ function updatePriceStats(totalValue) {
   }).sort((a, b) => b.val - a.val);
   const maxV = Math.max(...byCat.map(g => g.val), 1);
   document.getElementById("block3").innerHTML = `<h3>Value by category</h3><div class="hbar-chart">${renderHbars(byCat.map(g => ({
-    label: g.label.replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"),
+    label: g.label.replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"),
     val: formatValue(g.val),
     pct: g.val / maxV * 100,
     color: categoryColor(g.cat, 0.8),
@@ -902,7 +902,7 @@ function updateCategoryStats(totalValue) {
   const rpByCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
     for (const d of data) { if (d.category === cat && d.rp_ratio != null && d.value) { wS += d.rp_ratio * d.value; wC += d.value; } }
-    return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
+    return {label: CAT_LABELS[cat].replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block4").innerHTML = `<h3>R/P by category</h3><div class="hbar-chart">${renderHbars(rpByCat.filter(g => g.avg != null).map(g => ({
     label: g.label, val: g.avg.toFixed(0) + "yr",
@@ -913,7 +913,7 @@ function updateCategoryStats(totalValue) {
   const riskByCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
     for (const d of data) { if (d.category === cat && d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
-    return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
+    return {label: CAT_LABELS[cat].replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block5").innerHTML = `<h3>Geo risk by category</h3><div class="hbar-chart">${renderHbars(riskByCat.filter(g => g.avg != null).map(g => ({
     label: g.label, val: g.avg.toFixed(1), pct: g.avg / 10 * 100, color: exposureColor(g.avg, 0.8),
@@ -1046,7 +1046,7 @@ function updateExposureStats(totalValue) {
   const riskByCat = CATEGORIES.map(cat => {
     let wS = 0, wC = 0;
     for (const d of data) { if (d.category === cat && d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
-    return {label: CAT_LABELS[cat].replace("Industrial ","").replace("Critical ","").replace("Precious ","").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
+    return {label: CAT_LABELS[cat].replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
   });
   document.getElementById("block5").innerHTML = `<h3>Risk by category</h3><div class="hbar-chart">${renderHbars(riskByCat.filter(g => g.avg != null).map(g => ({
     label: g.label, val: g.avg.toFixed(1), pct: g.avg / 10 * 100, color: exposureColor(g.avg, 0.8),
