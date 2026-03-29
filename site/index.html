@@ -1102,7 +1102,7 @@ function drawGradientLegend() {
   } else if (colorMode === "continent") {
     const sw = 80 / CONTINENTS.length;
     CONTINENTS.forEach((cont, i) => {
-      const rgb = CONTINENT_COLORS[cont];
+      const rgb = (colorblindMode ? CONTINENT_COLORS_CB : CONTINENT_COLORS)[cont];
       gctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`;
       gctx.fillRect(i * sw, 0, sw, 8);
     });
