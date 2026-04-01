@@ -754,17 +754,22 @@ function showTooltip(d, mx, my) {
   const prod = d.production != null
     ? d.production.toLocaleString() + " " + (d.production_unit || "")
     : "\u2014";
+  const reserveUnit = (d.production_unit || "").replace(/\/yr$/i, "");
+  const reserves = d.reserves != null ? d.reserves.toLocaleString() + (reserveUnit ? " " + reserveUnit : "") : "\u2014";
+  const reserveShare = d.reserve_share_pct != null ? d.reserve_share_pct.toFixed(1) + "%" : "\u2014";
   tt.querySelector(".tt-stats").innerHTML = `
     <span class="label">Prod. value</span><span class="value">${formatValue(d.value)}</span>
     <span class="label">Production</span><span class="value">${prod}</span>
-    <span class="label">World share</span><span class="value">${share}</span>
-    <span class="label">R/P ratio</span><span class="value">${rp}</span>`;
+    <span class="label">Prod. world share</span><span class="value">${share}</span>
+    <span class="label">R/P ratio</span><span class="value">${rp}</span>
+    <span class="label">Reserves</span><span class="value">${reserves}</span>
+    <span class="label">Reserve world share</span><span class="value">${reserveShare}</span>`;
   tt.querySelector(".tt-rationale").textContent =
     colorMode === "exposure" ? (d.exposure_rationale || "") : "";
   let tx = mx + 16, ty = my - 16;
   if (tx + 340 > window.innerWidth) tx = mx - 356;
   if (ty < 10) ty = my + 16;
-  if (ty + 200 > window.innerHeight) ty = my - 200;
+  if (ty + 260 > window.innerHeight) ty = my - 260;
   tt.style.left = tx + "px"; tt.style.top = ty + "px";
   tt.classList.add("visible");
 }

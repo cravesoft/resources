@@ -32,6 +32,21 @@ def main():
     def _int(v):
         return int(float(v)) if v else None
 
+    # Build world reserves per commodity: prefer explicit world_reserves field,
+    # fall back to sum of reserves_proved across covered countries.
+    world_reserves_by_commodity: dict[str, float] = {}
+    reserves_sums: dict[str, float] = {}
+    for row in rows:
+        c = row["commodity"]
+        if row["world_reserves"]:
+            world_reserves_by_commodity[c] = float(row["world_reserves"])
+        if row["reserves_proved"]:
+            reserves_sums[c] = reserves_sums.get(c, 0.0) + float(row["reserves_proved"])
+    # Fill in missing commodities using sum of covered countries
+    for c, s in reserves_sums.items():
+        if c not in world_reserves_by_commodity:
+            world_reserves_by_commodity[c] = s
+
     # Merge
     data = []
     for row in rows:
@@ -56,6 +71,10 @@ def main():
             "country_share_pct":  _float(row["country_share_pct"]),
             "carbon_intensity":   _float(row["carbon_intensity"]),
             "carbon_unit":        row["carbon_intensity_unit"],
+            # Reserves
+            "reserves":           _float(row["reserves_proved"]),
+            "reserve_share_pct":  round(float(row["reserves_proved"]) / world_reserves_by_commodity[row["commodity"]] * 100, 1)
+                                  if row["reserves_proved"] and row["commodity"] in world_reserves_by_commodity else None,
             # Geopolitical risk score (may be None if not yet scored)
             "exposure":           score.get("exposure"),
             "exposure_rationale": score.get("rationale"),
