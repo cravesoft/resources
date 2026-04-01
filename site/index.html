@@ -281,6 +281,7 @@ Respond with ONLY a JSON object: {"exposure": &lt;integer 0-10&gt;, "rationale":
       <h3>Layer</h3>
       <div class="color-toggle" id="colorToggle">
         <button data-mode="rp" class="active">R/P Ratio</button>
+        <button data-mode="reserve">Reserves</button>
         <button data-mode="price">Price</button>
         <button data-mode="category">Category</button>
         <button data-mode="country">Country</button>
@@ -476,6 +477,13 @@ function exposureColor(v, a) {
   return gradientCSS(v / 10, a);
 }
 
+// Reserve world share: 0.1%=red, 100%=green (log scale)
+function reserveColor(v, a) {
+  if (v == null) return `rgba(128,128,128,${a})`;
+  const t = Math.max(0, Math.min(1, (Math.log10(Math.max(0.1, v)) + 1) / 3));
+  return gradientCSS(1 - t, a);
+}
+
 // Continent mapping and colors
 const COUNTRY_CONTINENT = {
   "Argentina": "South America", "Brazil": "South America", "Chile": "South America",
@@ -539,6 +547,7 @@ function tileColorCSS(d, alpha) {
   if (colorMode === "country")   return countryColor(d.country, alpha);
   if (colorMode === "continent") return continentColor(d.country, alpha);
   if (colorMode === "exposure")  return exposureColor(d.exposure, alpha);
+  if (colorMode === "reserve")   return reserveColor(d.reserve_share_pct, alpha);
   return `rgba(128,128,128,${alpha})`;
 }
 
@@ -569,6 +578,9 @@ function tileSubInfo(r) {
   }
   if (colorMode === "exposure") {
     return (r.exposure != null ? r.exposure + "/10 risk" : "unscored") + " \u00b7 " + val;
+  }
+  if (colorMode === "reserve") {
+    return (r.reserve_share_pct != null ? r.reserve_share_pct.toFixed(1) + "% reserves" : "") + " \u00b7 " + val;
   }
   return val;
 }
@@ -742,6 +754,15 @@ function tooltipHighlight(d) {
       `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
       `<div style="height:100%;width:${v * 10}%;background:${color};border-radius:2px;"></div></div>`;
   }
+  if (colorMode === "reserve") {
+    const v = d.reserve_share_pct;
+    if (v == null) return `<span style="color:var(--fg2);">Reserve share: no data</span>`;
+    const color = reserveColor(v, 1);
+    const pct = Math.max(0, Math.min(100, (Math.log10(Math.max(0.1, v)) + 1) / 3 * 100));
+    return `<span style="color:${color};font-weight:600;">Reserve world share: ${v.toFixed(1)}%</span>` +
+      `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
+      `<div style="height:100%;width:${pct}%;background:${color};border-radius:2px;"></div></div>`;
+  }
   return "";
 }
 
@@ -805,6 +826,7 @@ function updateStats() {
   else if (colorMode === "category") updateCategoryStats(totalValue);
   else if (colorMode === "country")   updateCountryStats(totalValue);
   else if (colorMode === "continent") updateContinentStats(totalValue);
+  else if (colorMode === "reserve")   updateReserveStats(totalValue);
   else                                updateExposureStats(totalValue);
 }
 
@@ -1028,6 +1050,62 @@ function updateContinentStats(totalValue) {
   document.getElementById("block8").innerHTML = "";
 }
 
+function updateReserveStats(totalValue) {
+  let wS = 0, wC = 0;
+  for (const d of data) { if (d.reserve_share_pct != null && d.value) { wS += d.reserve_share_pct * d.value; wC += d.value; } }
+  const avg = wC > 0 ? wS / wC : 0;
+  document.getElementById("block2").innerHTML = `<h3>Avg. reserve share</h3>
+    <div class="stat-big"><span style="color:${reserveColor(avg, 1)}">${avg.toFixed(1)}<span style="font-size:18px;font-weight:400">%</span></span></div>
+    <div class="stat-label">value-weighted</div>`;
+
+  const buckets = [{lo:0,hi:1,mid:0.5},{lo:1,hi:5,mid:2.5},{lo:5,hi:15,mid:9},{lo:15,hi:35,mid:23},{lo:35,hi:Infinity,mid:60}];
+  const histV = buckets.map(() => 0);
+  for (const d of data) {
+    if (d.reserve_share_pct != null && d.value) {
+      const i = buckets.findIndex(b => d.reserve_share_pct >= b.lo && d.reserve_share_pct < b.hi);
+      if (i >= 0) histV[i] += d.value;
+    }
+  }
+  const maxH = Math.max(...histV, 1);
+  document.getElementById("block3").innerHTML = `<h3>Value by reserve share</h3>
+    <div class="histogram">${histV.map((c, i) => `<div class="bar" style="height:${Math.max(2, c / maxH * 100)}%;background:${reserveColor(buckets[i].mid, 0.7)}"></div>`).join("")}</div>
+    <div class="hist-labels"><span>&lt;1%</span><span>15%</span><span>35%+</span></div>`;
+
+  const tierDefs = [
+    {label:"<1%", lo:0, hi:1, mid:0.5},
+    {label:"1–5%", lo:1, hi:5, mid:2.5},
+    {label:"5–15%", lo:5, hi:15, mid:9},
+    {label:"15–35%", lo:15, hi:35, mid:23},
+    {label:">35%", lo:35, hi:Infinity, mid:60},
+  ];
+  const tiers = tierDefs.map(t => {
+    let val = 0;
+    for (const d of data) { if (d.reserve_share_pct != null && d.value && d.reserve_share_pct >= t.lo && d.reserve_share_pct < t.hi) val += d.value; }
+    return {...t, value: val, color: reserveColor(t.mid, 1)};
+  });
+  document.getElementById("block4").innerHTML = `<h3>Reserve share tiers</h3><div class="tier-bar">${renderTiers(tiers, totalValue)}</div>`;
+
+  const byCat = CATEGORIES.map(cat => {
+    let wS = 0, wC = 0;
+    for (const d of data) { if (d.category === cat && d.reserve_share_pct != null && d.value) { wS += d.reserve_share_pct * d.value; wC += d.value; } }
+    return {label: CAT_LABELS[cat].replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
+  });
+  document.getElementById("block5").innerHTML = `<h3>Reserve share by category</h3><div class="hbar-chart">${renderHbars(byCat.filter(g => g.avg != null).map(g => ({
+    label: g.label, val: g.avg.toFixed(1) + "%",
+    pct: Math.max(0, Math.min(100, (Math.log10(Math.max(0.1, g.avg)) + 1) / 3 * 100)),
+    color: reserveColor(g.avg, 0.8),
+  })))}</div>`;
+
+  let dominant = 0;
+  for (const d of data) { if (d.reserve_share_pct != null && d.reserve_share_pct >= 25 && d.value) dominant += d.value; }
+  document.getElementById("block6").innerHTML = `<h3>Dominant reserve value</h3>
+    <div class="stat-big" style="color:${reserveColor(60, 1)}">${formatValue(dominant)}</div>
+    <div class="stat-label">countries holding \u226525% of world reserves</div>`;
+
+  document.getElementById("block7").innerHTML = "";
+  document.getElementById("block8").innerHTML = "";
+}
+
 function updateExposureStats(totalValue) {
   let wS = 0, wC = 0;
   for (const d of data) { if (d.exposure != null && d.value) { wS += d.exposure * d.value; wC += d.value; } }
@@ -1092,6 +1170,7 @@ function resize() { dpr = window.devicePixelRatio || 1; layout(); draw(); }
 
 const LEGEND_CONFIG = {
   rp:       { low: "Depleting", high: "Long reserve" },
+  reserve:  { low: "Minor share", high: "Dominant share" },
   price:    { low: "Cheap", high: "Expensive" },
   category: { low: "Fossil Fuels", high: "Precious Metals" },
   country:   { low: "", high: "" },
@@ -1124,8 +1203,8 @@ function drawGradientLegend() {
   } else {
     for (let x = 0; x < 80; x++) {
       const t = x / 79;
-      if (colorMode === "rp") gctx.fillStyle = gradientCSS(1 - t, 1);
-      else                    gctx.fillStyle = gradientCSS(t, 1);
+      if (colorMode === "rp" || colorMode === "reserve") gctx.fillStyle = gradientCSS(1 - t, 1);
+      else                                               gctx.fillStyle = gradientCSS(t, 1);
       gctx.fillRect(x, 0, 1, 8);
     }
   }
