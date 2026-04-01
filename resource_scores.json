@@ -342,5 +342,557 @@
     "country": "Zimbabwe",
     "exposure": 6,
     "rationale": "Zimbabwe presents high geopolitical risk due to its significant political instability, unpredictable governance, and a history of disruptive policy-making, such as the raw lithium export ban. While not a dominant supplier (7.3% global share), lithium is a critical mineral, making any supply disruption from this politically volatile country impactful for importing economies."
+  },
+  {
+    "slug": "lithium-argentina",
+    "title": "Lithium - Argentina",
+    "commodity": "Lithium",
+    "country": "Argentina",
+    "exposure": 3,
+    "rationale": "Argentina's political and economic instability, marked by high inflation and policy shifts, introduces a degree of risk to consistent supply. However, its relatively small share of global lithium production (4.2%) means that any disruption would not severely impact importing economies, as alternative suppliers are readily available."
+  },
+  {
+    "slug": "lithium-brazil",
+    "title": "Lithium - Brazil",
+    "commodity": "Lithium",
+    "country": "Brazil",
+    "exposure": 1,
+    "rationale": "Brazil is a democratic country with no history of weaponizing resource exports. Its share of global lithium production is very small (2.6%), meaning any disruption would have a negligible impact on global supply and importing economies, despite lithium's strategic importance."
+  },
+  {
+    "slug": "cobalt-russia",
+    "title": "Cobalt - Russia",
+    "commodity": "Cobalt",
+    "country": "Russia",
+    "exposure": 6,
+    "rationale": "Despite Russia's relatively small share of global cobalt production (3.7%), the geopolitical risk is elevated due to the country's active hostility towards major consumer blocs and its demonstrated willingness to weaponize commodity exports. Cobalt is a critical mineral, and while a disruption would not cripple global supply, it would severely impact specific supply chains reliant on Russian material."
+  },
+  {
+    "slug": "cobalt-australia",
+    "title": "Cobalt - Australia",
+    "commodity": "Cobalt",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country with strong alignment to major consumer blocs and no history of weaponizing exports. Its share of global cobalt production is very small (2.2%), meaning importing economies are not dependent on Australian supply. The geopolitical risk of supply disruption from Australia is minimal."
+  },
+  {
+    "slug": "cobalt-philippines",
+    "title": "Cobalt - Philippines",
+    "commodity": "Cobalt",
+    "country": "Philippines",
+    "exposure": 1,
+    "rationale": "The Philippines accounts for a negligible 1.6% of global cobalt production, meaning importing economies are not dependent on this source. While cobalt is a critical mineral, the country's small market share and general alignment with major consumer blocs significantly mitigate geopolitical supply risk from this specific origin."
+  },
+  {
+    "slug": "cobalt-canada",
+    "title": "Cobalt - Canada",
+    "commodity": "Cobalt",
+    "country": "Canada",
+    "exposure": 1,
+    "rationale": "Canada is a highly stable, democratic country and a close ally of major consumer blocs. Its share of global cobalt production is extremely small (1.8%), meaning it is not a significant or irreplaceable supplier, and there is no history of export weaponization."
+  },
+  {
+    "slug": "cobalt-papua-new-guinea",
+    "title": "Cobalt - Papua New Guinea",
+    "commodity": "Cobalt",
+    "country": "Papua New Guinea",
+    "exposure": 2,
+    "rationale": "Papua New Guinea faces significant political instability and governance challenges, which could lead to internal supply disruptions. However, its extremely small share of global cobalt production (1.3%) means any disruption would have a negligible impact on global supply or importing economies, as alternative suppliers are readily available."
+  },
+  {
+    "slug": "nickel-indonesia",
+    "title": "Nickel - Indonesia",
+    "commodity": "Nickel",
+    "country": "Indonesia",
+    "exposure": 7,
+    "rationale": "Indonesia is a dominant global supplier of nickel, accounting for over 50% of world production. The country has a clear track record of implementing raw ore export bans to force domestic processing, which significantly disrupts global supply chains for this critical mineral, especially for EV batteries. This state-driven resource nationalism creates high geopolitical risk for importing economies."
+  },
+  {
+    "slug": "nickel-philippines",
+    "title": "Nickel - Philippines",
+    "commodity": "Nickel",
+    "country": "Philippines",
+    "exposure": 5,
+    "rationale": "The Philippines is a significant global producer of nickel (11% share), particularly of nickel ore, making it an important link in certain supply chains. There is a precedent for the country implementing or threatening export restrictions on raw ore for domestic value-add or environmental reasons, which can disrupt global supply. While generally aligned with major consumer blocs, the country's political stability and governance quality present moderate risks of policy shifts impacting supply."
+  },
+  {
+    "slug": "nickel-russia",
+    "title": "Nickel - Russia",
+    "commodity": "Nickel",
+    "country": "Russia",
+    "exposure": 7,
+    "rationale": "Russia, an authoritarian state actively hostile to major consumer blocs, accounts for a significant 5.6% of global nickel production, a critical mineral for batteries and stainless steel. While not a monopoly, this share is substantial enough that any disruption due to sanctions, counter-sanctions, or geopolitical instability would cause significant market volatility and supply chain challenges, building on Russia's precedent of weaponizing other commodity exports."
+  },
+  {
+    "slug": "nickel-new-caledonia",
+    "title": "Nickel - New Caledonia",
+    "commodity": "Nickel",
+    "country": "New Caledonia",
+    "exposure": 2,
+    "rationale": "New Caledonia is a French territory, ensuring strong alignment with major consumer blocs and a very low risk of export weaponization. However, ongoing independence movements introduce domestic political instability that could lead to supply disruptions. Its 6.2% share of global nickel production is significant but not dominant, with alternative suppliers available."
+  },
+  {
+    "slug": "nickel-australia",
+    "title": "Nickel - Australia",
+    "commodity": "Nickel",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country with strong alliances with major consumer blocs and no history of weaponizing exports. Its share of global nickel production is relatively small (4%), meaning it is not a dominant supplier and alternative sources are readily available, significantly mitigating supply disruption risk."
+  },
+  {
+    "slug": "nickel-canada",
+    "title": "Nickel - Canada",
+    "commodity": "Nickel",
+    "country": "Canada",
+    "exposure": 1,
+    "rationale": "Canada is a highly stable, democratic nation and a close ally of major consumer blocs, ensuring reliable supply. Its 4.2% share of global nickel production is not dominant, meaning multiple alternative suppliers are readily available. There is no historical precedent or credible risk of Canada weaponizing its resource exports."
+  },
+  {
+    "slug": "graphite-china",
+    "title": "Graphite - China",
+    "commodity": "Graphite",
+    "country": "China",
+    "exposure": 9,
+    "rationale": "China holds a near-monopoly on global graphite production (79.1%), a critical material for electric vehicle batteries and other strategic industries. Beijing has a demonstrated history of using export controls for geopolitical leverage, most recently implementing permit requirements for graphite exports in late 2023, signaling a clear willingness to weaponize supply."
+  },
+  {
+    "slug": "graphite-mozambique",
+    "title": "Graphite - Mozambique",
+    "commodity": "Graphite",
+    "country": "Mozambique",
+    "exposure": 6,
+    "rationale": "Mozambique faces significant internal security challenges, particularly the ongoing insurgency in Cabo Delgado province where key graphite projects are located, posing a direct threat of supply disruption. While not a dominant global producer (6.4% share), graphite is a critical mineral for EV batteries, making Mozambique an important non-Chinese source for diversifying supply chains. A disruption would significantly impact efforts to secure critical mineral supply."
+  },
+  {
+    "slug": "graphite-madagascar",
+    "title": "Graphite - Madagascar",
+    "commodity": "Graphite",
+    "country": "Madagascar",
+    "exposure": 4,
+    "rationale": "Madagascar has a history of political instability and governance challenges, which poses a risk of supply disruptions due to internal factors. While graphite is a critical mineral for EV batteries, Madagascar's 4.1% share of global production means it is not a dominant supplier, mitigating the overall market impact of a disruption from this source."
+  },
+  {
+    "slug": "graphite-brazil",
+    "title": "Graphite - Brazil",
+    "commodity": "Graphite",
+    "country": "Brazil",
+    "exposure": 2,
+    "rationale": "Brazil accounts for a small share (4.3%) of global graphite production, meaning it is not a dominant supplier and multiple alternative sources are readily available. While graphite is a critical mineral, Brazil's democratic governance and lack of historical precedent for export weaponization further mitigate the risk of supply disruption or weaponization causing serious harm to importing economies."
+  },
+  {
+    "slug": "manganese-south-africa",
+    "title": "Manganese - South Africa",
+    "commodity": "Manganese",
+    "country": "South Africa",
+    "exposure": 5,
+    "rationale": "South Africa is the largest global producer of manganese (37.2% share), making it a critical supplier for the steel industry. The country faces significant domestic challenges, including persistent infrastructure deficiencies (power, rail), social unrest, and governance issues, which pose a risk of unintentional supply disruptions. While there's no history of export weaponization, the high market concentration combined with internal instability creates a moderate geopolitical risk for importing economies."
+  },
+  {
+    "slug": "manganese-australia",
+    "title": "Manganese - Australia",
+    "commodity": "Manganese",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing exports. While Australia is a significant manganese producer (14.6% of global supply), it is not a dominant or irreplaceable supplier, and alternative sources exist. The risk of supply disruption or weaponization from Australia is extremely low."
+  },
+  {
+    "slug": "manganese-gabon",
+    "title": "Manganese - Gabon",
+    "commodity": "Manganese",
+    "country": "Gabon",
+    "exposure": 7,
+    "rationale": "Gabon's recent military coup introduces significant political instability and uncertainty, posing a direct risk to supply. The country is a major global producer, accounting for nearly 23% of world manganese supply, a critical mineral essential for steel production and increasingly for EV batteries. A disruption from Gabon would significantly impact global markets."
+  },
+  {
+    "slug": "manganese-china",
+    "title": "Manganese - China",
+    "commodity": "Manganese",
+    "country": "China",
+    "exposure": 2,
+    "rationale": "China's share of global manganese production is very low (3.9%), meaning it is not a dominant supplier of the raw material. While China has a track record of using export controls for critical minerals, its limited market share in manganese ore production significantly reduces its ability to weaponize supply of this specific commodity to cause serious harm to importing economies."
+  },
+  {
+    "slug": "manganese-ghana",
+    "title": "Manganese - Ghana",
+    "commodity": "Manganese",
+    "country": "Ghana",
+    "exposure": 2,
+    "rationale": "Ghana is a relatively stable democratic producer with good relations with major consumer blocs. Its 4.2% share of global manganese production is small, meaning importing economies are not highly dependent on this specific source. While some internal political or economic instability could cause minor disruptions, alternative suppliers are readily available, limiting the geopolitical risk."
+  },
+  {
+    "slug": "rare-earths-china",
+    "title": "Rare Earths - China",
+    "commodity": "Rare Earths",
+    "country": "China",
+    "exposure": 9,
+    "rationale": "China holds a dominant share of global rare earth production and an even greater share of processing, making importing economies highly dependent. Beijing has a clear historical precedent of weaponizing these critical materials for geopolitical leverage, and their strategic importance to defense and high-tech industries is immense amidst increasing geopolitical tensions."
+  },
+  {
+    "slug": "rare-earths-usa",
+    "title": "Rare Earths - USA",
+    "commodity": "Rare Earths",
+    "country": "United States",
+    "exposure": 1,
+    "rationale": "The United States is a highly stable, democratic producer and a core ally to major consumer blocs. Its rare earth production actively contributes to supply diversification, reducing overall geopolitical risk for importing economies by offering an alternative to more concentrated or potentially hostile suppliers. There is virtually no risk of the US weaponizing or disrupting its own rare earth exports."
+  },
+  {
+    "slug": "rare-earths-australia",
+    "title": "Rare Earths - Australia",
+    "commodity": "Rare Earths",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing exports. While rare earths are strategically critical, Australia's production provides a reliable alternative to dominant, higher-risk suppliers, thereby reducing overall market concentration risk for importers."
+  },
+  {
+    "slug": "rare-earths-myanmar",
+    "title": "Rare Earths - Myanmar",
+    "commodity": "Rare Earths",
+    "country": "Myanmar",
+    "exposure": 8,
+    "rationale": "Myanmar is an extremely unstable country, ruled by a military junta and embroiled in civil conflict, making its supply highly vulnerable to disruption. It is a critical, though often informal, source of heavy rare earth elements (HREEs), which are strategically important and difficult to substitute. The illicit nature of much of this production further exacerbates supply chain risks for these essential materials."
+  },
+  {
+    "slug": "rare-earths-russia",
+    "title": "Rare Earths - Russia",
+    "commodity": "Rare Earths",
+    "country": "Russia",
+    "exposure": 2,
+    "rationale": "While Russia is a geopolitically hostile actor with a track record of weaponizing commodity exports, its share of global rare earth production is extremely low (0.7%). Any disruption or withholding of this supply would therefore have a negligible impact on global markets and importing economies, limiting the overall geopolitical risk."
+  },
+  {
+    "slug": "rare-earths-india",
+    "title": "Rare Earths - India",
+    "commodity": "Rare Earths",
+    "country": "India",
+    "exposure": 1,
+    "rationale": "India is a stable democratic country with strong ties to major consumer blocs. Its share of global rare earth production is extremely low (0.8%), meaning it is not a dominant or critical supplier. Any potential disruption from India would have a negligible impact on global supply or importing economies."
+  },
+  {
+    "slug": "copper-chile",
+    "title": "Copper - Chile",
+    "commodity": "Copper",
+    "country": "Chile",
+    "exposure": 2,
+    "rationale": "Chile is a stable democratic producer with a market-oriented economy and no history of weaponizing its copper exports. While it accounts for a significant portion of global supply (23.2%), other major producers exist, and Chile is generally aligned with major consumer blocs. The primary risks are internal, such as labor disputes or policy shifts, rather than geopolitical leverage."
+  },
+  {
+    "slug": "copper-peru",
+    "title": "Copper - Peru",
+    "commodity": "Copper",
+    "country": "Peru",
+    "exposure": 6,
+    "rationale": "Peru is a significant copper producer (12.2% of global supply) of a critical industrial metal. The country has a history of severe political instability, frequent social unrest, and protests that often disrupt mining operations, leading to supply interruptions. While not a state-sponsored weaponization risk, the high likelihood of internal disruptions poses a substantial geopolitical risk to global copper supply."
+  },
+  {
+    "slug": "copper-drc",
+    "title": "Copper - DRC",
+    "commodity": "Copper",
+    "country": "Dem. Rep. Congo",
+    "exposure": 6,
+    "rationale": "The Democratic Republic of Congo is a highly unstable country with severe governance issues, posing a constant risk of supply disruptions due to conflict, corruption, or logistical challenges. While not a dominant supplier, its 13% share of global copper production is significant for this critical industrial metal, making importing economies vulnerable to its instability."
+  },
+  {
+    "slug": "copper-china",
+    "title": "Copper - China",
+    "commodity": "Copper",
+    "country": "China",
+    "exposure": 3,
+    "rationale": "China's share of global copper mining production is relatively low (8.1%), limiting its direct leverage as a raw material supplier. However, copper is a strategically critical resource, and China's increasingly confrontational geopolitical stance and past use of export controls for other materials introduce a baseline level of risk."
+  },
+  {
+    "slug": "copper-usa",
+    "title": "Copper - USA",
+    "commodity": "Copper",
+    "country": "United States",
+    "exposure": 1,
+    "rationale": "The United States is a highly stable democratic producer with robust governance, making politically motivated supply disruptions or internal instability extremely unlikely. Its 5% share of global copper production is not dominant, ensuring that importing economies have ample alternative suppliers and are not dependent on US exports."
+  },
+  {
+    "slug": "copper-russia",
+    "title": "Copper - Russia",
+    "commodity": "Copper",
+    "country": "Russia",
+    "exposure": 6,
+    "rationale": "Russia is an authoritarian state engaged in active geopolitical confrontation and subject to extensive sanctions, creating high risk of supply disruption or weaponization. While its global copper market share is low (3.9%), the inherent instability and hostility of the producer country make any imports from Russia highly vulnerable to political decisions or further sanctions."
+  },
+  {
+    "slug": "copper-zambia",
+    "title": "Copper - Zambia",
+    "commodity": "Copper",
+    "country": "Zambia",
+    "exposure": 3,
+    "rationale": "Zambia is a relatively stable democratic producer, but like many developing economies, it carries some inherent political and governance risks (e.g., resource nationalism, policy shifts). However, its 3.2% share of global copper production is small, meaning importing economies are not highly dependent on Zambian supply, and there is no history of export weaponization."
+  },
+  {
+    "slug": "copper-mexico",
+    "title": "Copper - Mexico",
+    "commodity": "Copper",
+    "country": "Mexico",
+    "exposure": 2,
+    "rationale": "Mexico is a democratic country and a close economic partner to major consumer blocs. Its share of global copper production is small (3.1%), meaning alternative suppliers are readily available. While Mexico faces internal challenges like organized crime and governance issues, these are unlikely to lead to state-sponsored export weaponization or cause systemic harm to importing economies."
+  },
+  {
+    "slug": "copper-australia",
+    "title": "Copper - Australia",
+    "commodity": "Copper",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing exports. While copper is a critical industrial metal, Australia's 3.4% share of global production is not dominant, ensuring multiple alternative suppliers are available."
+  },
+  {
+    "slug": "iron-ore-australia",
+    "title": "Iron Ore - Australia",
+    "commodity": "Iron Ore",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing its exports. While it is a significant global producer, other major suppliers exist, and the risk of politically motivated supply disruption is extremely low."
+  },
+  {
+    "slug": "iron-ore-brazil",
+    "title": "Iron Ore - Brazil",
+    "commodity": "Iron Ore",
+    "country": "Brazil",
+    "exposure": 2,
+    "rationale": "Brazil is a stable democratic producer with no history of weaponizing iron ore exports. While it accounts for a significant share (17.6%) of global production, multiple alternative suppliers, notably Australia, ensure market diversity. Any disruptions are more likely to stem from internal operational or environmental issues rather than geopolitical decisions."
+  },
+  {
+    "slug": "iron-ore-china",
+    "title": "Iron Ore - China",
+    "commodity": "Iron Ore",
+    "country": "China",
+    "exposure": 1,
+    "rationale": "China is the world's largest importer and consumer of iron ore, with its domestic production primarily serving its own massive steel industry. It is not a significant exporter to global markets. Therefore, the risk of China disrupting or weaponizing its iron ore exports to harm importing economies is negligible, as these economies do not rely on China for supply."
+  },
+  {
+    "slug": "iron-ore-india",
+    "title": "Iron Ore - India",
+    "commodity": "Iron Ore",
+    "country": "India",
+    "exposure": 2,
+    "rationale": "India is a stable democratic producer of iron ore, accounting for 11% of global supply. While domestic policy can influence export volumes, there is no history of weaponizing this resource, and major alternative suppliers are readily available, mitigating geopolitical supply risk."
+  },
+  {
+    "slug": "iron-ore-russia",
+    "title": "Iron Ore - Russia",
+    "commodity": "Iron Ore",
+    "country": "Russia",
+    "exposure": 5,
+    "rationale": "Russia's active geopolitical confrontation with major consumer blocs and its track record of weaponizing energy exports create a high likelihood of politically motivated supply disruptions. However, Russia's relatively low share of global iron ore production (3.6%) means that alternative suppliers are readily available, limiting the potential for severe global economic harm from such disruptions."
+  },
+  {
+    "slug": "bauxite-australia",
+    "title": "Bauxite - Australia",
+    "commodity": "Bauxite",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing its resource exports. While a significant producer of bauxite, its 23.7% share is not dominant, and multiple alternative suppliers exist globally, mitigating supply concentration risk."
+  },
+  {
+    "slug": "bauxite-guinea",
+    "title": "Bauxite - Guinea",
+    "commodity": "Bauxite",
+    "country": "Guinea",
+    "exposure": 7,
+    "rationale": "Guinea is a major global supplier of bauxite, accounting for over 28% of world production. The country has a history of significant political instability, including recent coups, which poses a direct and high risk of supply disruption. A major interruption from Guinea would severely impact global aluminum supply chains."
+  },
+  {
+    "slug": "bauxite-china",
+    "title": "Bauxite - China",
+    "commodity": "Bauxite",
+    "country": "China",
+    "exposure": 3,
+    "rationale": "China is a significant bauxite producer (20.8% of global supply) but is also a major net importer of bauxite, limiting its leverage to weaponize exports. While China has a history of using export controls for other critical minerals and its governance is authoritarian, its reliance on imported bauxite reduces the direct geopolitical risk of its own bauxite supply being weaponized against importing economies."
+  },
+  {
+    "slug": "bauxite-brazil",
+    "title": "Bauxite - Brazil",
+    "commodity": "Bauxite",
+    "country": "Brazil",
+    "exposure": 2,
+    "rationale": "Brazil is a democratic nation with a generally stable political environment, though it experiences periodic internal political volatility. Its 7.3% share of global bauxite production is significant but not dominant, meaning multiple alternative suppliers exist globally. There is no historical precedent of Brazil weaponizing bauxite exports or major politically motivated supply disruptions."
+  },
+  {
+    "slug": "bauxite-india",
+    "title": "Bauxite - India",
+    "commodity": "Bauxite",
+    "country": "India",
+    "exposure": 1,
+    "rationale": "India is a stable democratic country with no history of weaponizing bauxite exports. Its 5.3% share of global production is relatively small, ensuring multiple alternative suppliers are readily available to importing economies."
+  },
+  {
+    "slug": "bauxite-jamaica",
+    "title": "Bauxite - Jamaica",
+    "commodity": "Bauxite",
+    "country": "Jamaica",
+    "exposure": 1,
+    "rationale": "Jamaica is a stable democratic country with strong ties to major consumer blocs. Its bauxite production accounts for a very small share (1.4%) of the global market, meaning numerous alternative suppliers are readily available. There is no history of supply weaponization or significant geopolitical risk associated with Jamaican bauxite."
+  },
+  {
+    "slug": "bauxite-indonesia",
+    "title": "Bauxite - Indonesia",
+    "commodity": "Bauxite",
+    "country": "Indonesia",
+    "exposure": 5,
+    "rationale": "Indonesia has a strong track record of resource nationalism, including imposing export bans on raw minerals like bauxite (and currently nickel) to force domestic processing. While Indonesia's share of global bauxite production is not dominant (6.8%), this policy creates a significant and demonstrated risk of supply disruption for importing economies, despite the availability of alternative suppliers."
+  },
+  {
+    "slug": "zinc-china",
+    "title": "Zinc - China",
+    "commodity": "Zinc",
+    "country": "China",
+    "exposure": 6,
+    "rationale": "China is the world's largest zinc producer, accounting for over a third of global supply. The Chinese government has a demonstrated history of using trade and export controls as geopolitical leverage, and ongoing tensions with major importing economies increase the risk of supply disruption or weaponization for strategically important industrial metals like zinc."
+  },
+  {
+    "slug": "zinc-peru",
+    "title": "Zinc - Peru",
+    "commodity": "Zinc",
+    "country": "Peru",
+    "exposure": 5,
+    "rationale": "Peru's significant political instability, frequent changes in government, and social unrest pose a moderate risk of supply disruptions from its mining sector. While Peru is a major zinc producer (12.1% global share), it is not a dominant supplier, and there is no history of weaponizing exports, mitigating the risk of deliberate geopolitical leverage."
+  },
+  {
+    "slug": "zinc-australia",
+    "title": "Zinc - Australia",
+    "commodity": "Zinc",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country with strong governance and no history of weaponizing its mineral exports. While Australia is a notable producer of zinc, its 9% share of global production means there are multiple alternative suppliers, mitigating market concentration risk. Zinc is an important industrial metal, but not typically considered 'defense-critical' in the same vein as other strategic minerals."
+  },
+  {
+    "slug": "zinc-india",
+    "title": "Zinc - India",
+    "commodity": "Zinc",
+    "country": "India",
+    "exposure": 2,
+    "rationale": "India is a stable democratic producer with no history of weaponizing its mineral exports. Its 7.1% share of global zinc production means it is not a dominant supplier, and alternative sources are readily available, mitigating dependence. Zinc, while important industrially, is not considered a uniquely critical resource for defense or high-tech sectors that would elevate geopolitical risk."
+  },
+  {
+    "slug": "zinc-mexico",
+    "title": "Zinc - Mexico",
+    "commodity": "Zinc",
+    "country": "Mexico",
+    "exposure": 3,
+    "rationale": "Mexico is a stable trading partner with major consumer blocs, and its 4.8% share of global zinc production means it is not a dominant supplier. While internal security issues and governance challenges could lead to localized disruptions, there is no historical precedent for export weaponization, and alternative suppliers are readily available."
+  },
+  {
+    "slug": "gold-china",
+    "title": "Gold - China",
+    "commodity": "Gold",
+    "country": "China",
+    "exposure": 4,
+    "rationale": "China is the largest global gold producer and an authoritarian state with a history of using trade as leverage. However, its 11.5% share is not a monopoly, and gold is a highly fungible commodity with diverse global supply and extensive above-ground stocks, limiting the impact of any single producer's disruption on critical industrial supply chains."
+  },
+  {
+    "slug": "gold-russia",
+    "title": "Gold - Russia",
+    "commodity": "Gold",
+    "country": "Russia",
+    "exposure": 7,
+    "rationale": "Russia is a significant gold producer (nearly 10% of global supply) and is actively engaged in geopolitical confrontation with major consumer blocs, leading to existing sanctions on its gold exports. While gold is not a critical industrial mineral and Russia is not a monopoly supplier, the producer's hostile stance and track record of weaponizing exports create a high risk of market disruption or financial leverage."
+  },
+  {
+    "slug": "gold-australia",
+    "title": "Gold - Australia",
+    "commodity": "Gold",
+    "country": "Australia",
+    "exposure": 0,
+    "rationale": "Australia is a highly stable, democratic country with strong alliances with major consumer blocs. Its 9.1% share of global gold production is significant but not dominant, and gold is a globally traded commodity with diverse supply sources, minimizing import dependence on any single producer."
+  },
+  {
+    "slug": "gold-canada",
+    "title": "Gold - Canada",
+    "commodity": "Gold",
+    "country": "Canada",
+    "exposure": 0,
+    "rationale": "Canada is a highly stable, democratic country with strong governance and a close alignment with major consumer blocs. Its 6.1% share of global gold production is not dominant, and gold is a widely available and fungible commodity with numerous alternative suppliers and significant global stockpiles, making supply disruptions from Canada highly unlikely to cause serious harm."
+  },
+  {
+    "slug": "gold-usa",
+    "title": "Gold - USA",
+    "commodity": "Gold",
+    "country": "United States",
+    "exposure": 0,
+    "rationale": "The United States is a highly stable democratic producer with strong governance. Its share of global gold production (5.2%) is not dominant, and gold is a globally traded commodity with numerous alternative suppliers and a vast existing market, making supply disruptions from the US highly unlikely to cause significant harm to importing economies."
+  },
+  {
+    "slug": "gold-ghana",
+    "title": "Gold - Ghana",
+    "commodity": "Gold",
+    "country": "Ghana",
+    "exposure": 2,
+    "rationale": "Ghana accounts for a small share (3.9%) of global gold production, making it a non-dominant supplier. Gold is a highly fungible commodity with numerous alternative sources, minimizing the impact of any potential disruption from Ghana. While Ghana is a relatively stable democracy, it faces some economic and governance challenges, introducing a minor level of political risk."
+  },
+  {
+    "slug": "gold-south-africa",
+    "title": "Gold - South Africa",
+    "commodity": "Gold",
+    "country": "South Africa",
+    "exposure": 1,
+    "rationale": "South Africa accounts for a very small share (3.2%) of global gold production, making it a non-dominant supplier. Gold is a globally traded commodity with numerous alternative sources and is not a critical industrial input, significantly reducing the geopolitical leverage of any single producer. While South Africa faces internal governance and stability challenges, these are unlikely to translate into geopolitical supply disruptions given its minor market share and gold's fungibility."
+  },
+  {
+    "slug": "gold-peru",
+    "title": "Gold - Peru",
+    "commodity": "Gold",
+    "country": "Peru",
+    "exposure": 2,
+    "rationale": "Peru faces significant political instability and social unrest, which can disrupt local production. However, gold is a highly fungible global commodity, and Peru accounts for a very small share (3.1%) of world production. This low market concentration and the non-critical nature of gold for defense/energy industries mean that any supply disruption from Peru would have minimal geopolitical impact on importing economies."
+  },
+  {
+    "slug": "silver-mexico",
+    "title": "Silver - Mexico",
+    "commodity": "Silver",
+    "country": "Mexico",
+    "exposure": 4,
+    "rationale": "Mexico is the world's largest silver producer, accounting for nearly 25% of global supply. While not a monopoly and generally aligned with major consumer blocs, the country faces significant internal governance challenges, including organized crime and corruption, which pose a persistent risk to operational stability and potential localized supply disruptions."
+  },
+  {
+    "slug": "silver-china",
+    "title": "Silver - China",
+    "commodity": "Silver",
+    "country": "China",
+    "exposure": 5,
+    "rationale": "China is a significant producer of silver (13.3% of global supply) and has a demonstrated willingness to use export controls for geopolitical leverage. While not a dominant supplier, its authoritarian governance and potential for trade weaponization elevate the risk, despite the availability of alternative sources from other major producers."
+  },
+  {
+    "slug": "silver-peru",
+    "title": "Silver - Peru",
+    "commodity": "Silver",
+    "country": "Peru",
+    "exposure": 4,
+    "rationale": "Peru is a significant silver producer (12.6% of global supply) but is characterized by persistent political instability, frequent government changes, and social unrest. While there's no history of weaponizing exports, internal disruptions from protests or labor issues pose a tangible risk to supply. However, multiple alternative suppliers exist globally, mitigating severe market impact from any single disruption."
+  },
+  {
+    "slug": "silver-russia",
+    "title": "Silver - Russia",
+    "commodity": "Silver",
+    "country": "Russia",
+    "exposure": 5,
+    "rationale": "Russia's hostile geopolitical stance and track record of weaponizing commodity exports pose a significant risk of supply disruption. However, Russia accounts for less than 5% of global silver production, meaning alternative suppliers are readily available and importing economies are not highly dependent on Russian silver, mitigating the potential for serious harm."
+  },
+  {
+    "slug": "silver-australia",
+    "title": "Silver - Australia",
+    "commodity": "Silver",
+    "country": "Australia",
+    "exposure": 1,
+    "rationale": "Australia is a highly stable, democratic country with strong alliances with major consumer blocs, posing minimal political risk. Its 4.0% share of global silver production is small, ensuring ample alternative suppliers and preventing market concentration or weaponization of supply."
+  },
+  {
+    "slug": "silver-chile",
+    "title": "Silver - Chile",
+    "commodity": "Silver",
+    "country": "Chile",
+    "exposure": 1,
+    "rationale": "Chile is a stable democratic producer with strong trade relations and no history of weaponizing exports. Its share of global silver production is very small (4.9%), ensuring ample alternative suppliers and low market concentration. Silver, while valuable, is not considered a uniquely strategic or irreplaceable resource for defense or critical technology."
+  },
+  {
+    "slug": "silver-bolivia",
+    "title": "Silver - Bolivia",
+    "commodity": "Silver",
+    "country": "Bolivia",
+    "exposure": 4,
+    "rationale": "Bolivia has a history of political instability and social unrest, which could lead to disruptions in mining operations or changes in resource policy. However, Bolivia is not a dominant global supplier of silver (5.3% share), and the resource is not considered uniquely critical or irreplaceable, mitigating the broader geopolitical impact of any potential supply issues."
   }
 ]
