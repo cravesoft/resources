@@ -894,5 +894,45 @@
     "country": "Bolivia",
     "exposure": 4,
     "rationale": "Bolivia has a history of political instability and social unrest, which could lead to disruptions in mining operations or changes in resource policy. However, Bolivia is not a dominant global supplier of silver (5.3% share), and the resource is not considered uniquely critical or irreplaceable, mitigating the broader geopolitical impact of any potential supply issues."
+  },
+  {
+    "slug": "silver-poland",
+    "title": "Silver - Poland",
+    "commodity": "Silver",
+    "country": "Poland",
+    "exposure": 1,
+    "rationale": "Poland is a stable democratic country and a member of the EU and NATO, ensuring high political stability and strong alignment with major consumer blocs. While Poland is a notable producer, its 5.2% share of global silver production is not dominant, with multiple larger alternative suppliers available. Silver, though important for industrial and investment purposes, is not considered a uniquely critical mineral for defense or high-tech industries in the same way as some other resources."
+  },
+  {
+    "slug": "platinum-south-africa",
+    "title": "Platinum - South Africa",
+    "commodity": "Platinum",
+    "country": "South Africa",
+    "exposure": 5,
+    "rationale": "South Africa is a major global supplier of platinum (36% share), making importing economies vulnerable to supply disruptions. The country faces significant internal challenges, including governance issues, infrastructure failures (e.g., power cuts), and labor unrest, which frequently impact mining operations and pose a risk to consistent supply."
+  },
+  {
+    "slug": "platinum-russia",
+    "title": "Platinum - Russia",
+    "commodity": "Platinum",
+    "country": "Russia",
+    "exposure": 7,
+    "rationale": "Russia is a dominant global producer of platinum, accounting for over 40% of world supply. Given Russia's active geopolitical confrontation with major consumer blocs and its demonstrated willingness to weaponize energy exports, there is a high risk of supply disruption or export restrictions for this critical industrial metal."
+  },
+  {
+    "slug": "platinum-zimbabwe",
+    "title": "Platinum - Zimbabwe",
+    "commodity": "Platinum",
+    "country": "Zimbabwe",
+    "exposure": 5,
+    "rationale": "Zimbabwe faces severe political instability, economic mismanagement, and governance issues, creating a high risk of internal supply disruptions. While its 7.6% share is not dominant, it is a significant contributor to a market already concentrated in politically sensitive regions, making disruptions impactful despite alternative suppliers."
+  },
+  {
+    "slug": "platinum-canada",
+    "title": "Platinum - Canada",
+    "commodity": "Platinum",
+    "country": "Canada",
+    "exposure": 1,
+    "rationale": "Canada is a highly stable, democratic country and a close ally of major consumer blocs, with no history of weaponizing its resource exports. While platinum is a strategically important resource, Canada's share of global production (7.7%) is not dominant, and other major suppliers exist, mitigating market concentration risk."
   }
 ]
