@@ -886,9 +886,13 @@ function updateRpStats(totalValue) {
 }
 
 function updatePriceStats(totalValue) {
-  document.getElementById("block2").innerHTML = `<h3>Total value</h3>
-    <div class="stat-big">${formatValue(totalValue)}</div>
-    <div class="stat-label">annual production</div>`;
+  const priced = data.filter(d => normalizedPriceTon(d) != null);
+  priced.sort((a, b) => normalizedPriceTon(b) - normalizedPriceTon(a));
+  const topD = priced[0];
+  const topNorm = topD ? normalizedPriceTon(topD) : null;
+  document.getElementById("block2").innerHTML = `<h3>Most expensive</h3>
+    <div class="stat-big" style="color:${priceColor(topNorm, 1)};font-size:20px;letter-spacing:-0.01em">${topD ? topD.commodity : "\u2014"}</div>
+    <div class="stat-label">${topNorm != null ? "$" + Math.round(topNorm).toLocaleString() + "/t normalized" : ""}</div>`;
 
   const byCat = CATEGORIES.map(cat => {
     let val = 0;
@@ -903,11 +907,21 @@ function updatePriceStats(totalValue) {
     color: categoryColor(g.cat, 0.8),
   })))}</div>`;
 
-  let concentrated = 0;
-  for (const d of data) { if (d.country_share_pct != null && d.country_share_pct > 50 && d.value) concentrated += d.value; }
-  document.getElementById("block4").innerHTML = `<h3>Concentrated supply</h3>
-    <div class="stat-big">${formatValue(concentrated)}</div>
-    <div class="stat-label">single country &gt;50% world share</div>`;
+  const concentrated = data
+    .filter(d => d.country_share_pct != null && d.country_share_pct > 50)
+    .reduce((acc, d) => {
+      const existing = acc.find(x => x.commodity === d.commodity);
+      if (!existing || d.country_share_pct > existing.share)
+        acc = acc.filter(x => x.commodity !== d.commodity).concat({commodity: d.commodity, country: d.country, share: d.country_share_pct, value: d.value, category: d.category});
+      return acc;
+    }, [])
+    .sort((a, b) => b.share - a.share);
+  document.getElementById("block4").innerHTML = `<h3>Concentrated supply</h3><div class="hbar-chart">${renderHbars(concentrated.map(g => ({
+    label: g.commodity + " \u2013 " + g.country.replace("United States","USA").replace("Saudi Arabia","S. Arabia").replace("Dem. Rep. Congo","DRC").replace("South Africa","S. Africa"),
+    val: g.share.toFixed(0) + "%",
+    pct: g.share,
+    color: categoryColor(g.category, 0.8),
+  })))}</div>`;
 
   const top6 = [...data].filter(d => d.value).sort((a, b) => b.value - a.value).slice(0, 6);
   document.getElementById("block5").innerHTML = `<h3>Top resources</h3><div class="hbar-chart">${renderHbars(top6.map(d => ({
