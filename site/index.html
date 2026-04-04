@@ -1064,58 +1064,58 @@ function updateContinentStats(totalValue) {
   document.getElementById("block8").innerHTML = "";
 }
 
-function updateReserveStats(totalValue) {
-  let wS = 0, wC = 0;
-  for (const d of data) { if (d.reserve_share_pct != null && d.value) { wS += d.reserve_share_pct * d.value; wC += d.value; } }
-  const avg = wC > 0 ? wS / wC : 0;
-  document.getElementById("block2").innerHTML = `<h3>Avg. reserve share</h3>
-    <div class="stat-big"><span style="color:${reserveColor(avg, 1)}">${avg.toFixed(1)}<span style="font-size:18px;font-weight:400">%</span></span></div>
-    <div class="stat-label">value-weighted</div>`;
+function abbrevCountry(c) {
+  return c.replace("United States","USA").replace("Saudi Arabia","S. Arabia")
+          .replace("Dem. Rep. Congo","DRC").replace("South Africa","S. Africa")
+          .replace("United Kingdom","UK");
+}
 
-  const buckets = [{lo:0,hi:1,mid:0.5},{lo:1,hi:5,mid:2.5},{lo:5,hi:15,mid:9},{lo:15,hi:35,mid:23},{lo:35,hi:Infinity,mid:60}];
-  const histV = buckets.map(() => 0);
+function updateReserveStats(totalValue) {
+  // For top commodities by production value, show the country with the largest reserve share
+  const commodityValue = {};
+  const topByCommodity = {};
   for (const d of data) {
-    if (d.reserve_share_pct != null && d.value) {
-      const i = buckets.findIndex(b => d.reserve_share_pct >= b.lo && d.reserve_share_pct < b.hi);
-      if (i >= 0) histV[i] += d.value;
+    if (d.value) commodityValue[d.commodity] = (commodityValue[d.commodity] || 0) + d.value;
+    if (d.reserve_share_pct != null) {
+      if (!topByCommodity[d.commodity] || d.reserve_share_pct > topByCommodity[d.commodity].share)
+        topByCommodity[d.commodity] = {commodity: d.commodity, country: d.country, share: d.reserve_share_pct, category: d.category};
     }
   }
-  const maxH = Math.max(...histV, 1);
-  document.getElementById("block3").innerHTML = `<h3>Value by reserve share</h3>
-    <div class="histogram">${histV.map((c, i) => `<div class="bar" style="height:${Math.max(2, c / maxH * 100)}%;background:${reserveColor(buckets[i].mid, 0.7)}"></div>`).join("")}</div>
-    <div class="hist-labels"><span>&lt;1%</span><span>15%</span><span>35%+</span></div>`;
-
-  const tierDefs = [
-    {label:"<1%", lo:0, hi:1, mid:0.5},
-    {label:"1–5%", lo:1, hi:5, mid:2.5},
-    {label:"5–15%", lo:5, hi:15, mid:9},
-    {label:"15–35%", lo:15, hi:35, mid:23},
-    {label:">35%", lo:35, hi:Infinity, mid:60},
-  ];
-  const tiers = tierDefs.map(t => {
-    let val = 0;
-    for (const d of data) { if (d.reserve_share_pct != null && d.value && d.reserve_share_pct >= t.lo && d.reserve_share_pct < t.hi) val += d.value; }
-    return {...t, value: val, color: reserveColor(t.mid, 1)};
-  });
-  document.getElementById("block4").innerHTML = `<h3>Reserve share tiers</h3><div class="tier-bar">${renderTiers(tiers, totalValue)}</div>`;
-
-  const byCat = CATEGORIES.map(cat => {
-    let wS = 0, wC = 0;
-    for (const d of data) { if (d.category === cat && d.reserve_share_pct != null && d.value) { wS += d.reserve_share_pct * d.value; wC += d.value; } }
-    return {label: CAT_LABELS[cat].replace("Industrial Metals","Industrial").replace("Critical ","").replace("Precious Metals","Precious").replace("Rare Earths","Rare Earth"), avg: wC > 0 ? wS / wC : null};
-  });
-  document.getElementById("block5").innerHTML = `<h3>Reserve share by category</h3><div class="hbar-chart">${renderHbars(byCat.filter(g => g.avg != null).map(g => ({
-    label: g.label, val: g.avg.toFixed(1) + "%",
-    pct: Math.max(0, Math.min(100, (Math.log10(Math.max(0.1, g.avg)) + 1) / 3 * 100)),
-    color: reserveColor(g.avg, 0.8),
+  const topCommodities = Object.entries(commodityValue)
+    .sort((a, b) => b[1] - a[1]).slice(0, 6)
+    .map(([c]) => topByCommodity[c]).filter(Boolean);
+  const maxShare = Math.max(...topCommodities.map(g => g.share), 1);
+  document.getElementById("block2").innerHTML = `<h3>Reserves (top commodities)</h3><div class="hbar-chart">${renderHbars(topCommodities.map(g => ({
+    label: g.commodity + " \u2013 " + abbrevCountry(g.country),
+    val: g.share.toFixed(0) + "%",
+    pct: g.share / maxShare * 100,
+    color: reserveColor(g.share, 0.8),
   })))}</div>`;
 
-  let dominant = 0;
-  for (const d of data) { if (d.reserve_share_pct != null && d.reserve_share_pct >= 25 && d.value) dominant += d.value; }
-  document.getElementById("block6").innerHTML = `<h3>Dominant reserve value</h3>
-    <div class="stat-big" style="color:${reserveColor(60, 1)}">${formatValue(dominant)}</div>
-    <div class="stat-label">countries holding \u226525% of world reserves</div>`;
+  // Concentrated reserves: top 5 commodities by the dominant country's reserve share
+  const concentrated = Object.values(topByCommodity).sort((a, b) => b.share - a.share).slice(0, 5);
+  document.getElementById("block3").innerHTML = `<h3>Concentrated reserves</h3><div class="hbar-chart">${renderHbars(concentrated.map(g => ({
+    label: g.commodity + " \u2013 " + abbrevCountry(g.country),
+    val: g.share.toFixed(0) + "%",
+    pct: g.share,
+    color: reserveColor(g.share, 0.8),
+  })))}</div>`;
 
+  // Reserve surplus: entries where reserve share most exceeds production share
+  const surplus = data
+    .filter(d => d.reserve_share_pct != null && d.country_share_pct != null)
+    .map(d => ({...d, gap: d.reserve_share_pct - d.country_share_pct}))
+    .sort((a, b) => b.gap - a.gap).slice(0, 6);
+  const maxGap = Math.max(...surplus.map(g => g.gap), 1);
+  document.getElementById("block4").innerHTML = `<h3>Reserve surplus</h3><div class="hbar-chart">${renderHbars(surplus.map(g => ({
+    label: g.commodity + " \u2013 " + abbrevCountry(g.country),
+    val: "+" + g.gap.toFixed(0) + "%",
+    pct: g.gap / maxGap * 100,
+    color: reserveColor(g.reserve_share_pct, 0.8),
+  })))}</div>`;
+
+  document.getElementById("block5").innerHTML = "";
+  document.getElementById("block6").innerHTML = "";
   document.getElementById("block7").innerHTML = "";
   document.getElementById("block8").innerHTML = "";
 }
